@@ -1,0 +1,52 @@
+export default function WifiIcon() {
+  return (
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <defs>
+          <style>{`.a{fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round}`}</style>
+        </defs>
+        <path
+          className="a"
+          d="M24.0211,32.9211a4.2163,4.2163,0,1,0,4.2162,4.2164v0h0A4.2163,4.2163,0,0,0,24.0211,32.9211Z"
+        ></path>
+        <line
+          className="a"
+          x1="25.2921"
+          y1="33.1168"
+          x2="33.3312"
+          y2="8.1025"
+        ></line>
+        <path
+          className="a"
+          d="M30.7652,28.6157c-.0913-.0763-.1881-.1418-.2813-.2145"
+        ></path>
+        <path
+          className="a"
+          d="M23.845,26.18a10.486,10.486,0,0,0-6.515,2.3989v.0364"
+        ></path>
+        <path
+          className="a"
+          d="M37.1783,21.3261a20.6539,20.6539,0,0,0-3.6515-2.3934"
+        ></path>
+        <path
+          className="a"
+          d="M26.8559,16.8115a20.6419,20.6419,0,0,0-15.9921,4.5146"
+        ></path>
+        <path
+          className="a"
+          d="M43.5,13.6741a30.5523,30.5523,0,0,0-6.8981-4.31"
+        ></path>
+        <path
+          className="a"
+          d="M29.9291,7.2488A30.5319,30.5319,0,0,0,4.5,13.6741"
+        ></path>
+      </g>
+    </svg>
+  );
+}
