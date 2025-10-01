@@ -25,7 +25,7 @@ const DroneStatus = ( { status } : { status : droneStatusType } ) => {
         {(() => {
             return (
                 <button
-                    className={`flex items-center justify-center font-['Special_Elite'] text-xl border border-dashed rounded-lg p-4 pt-5 hover:animate-pulse cursor-pointer ${
+                    className={`flex items-center justify-center font-['Special_Elite'] text-xl border border-dashed rounded-lg p-4 pt-5 hover:animate-pulse cursor-pointer min-w-[194px] ${
                         currentStatus === 'Friendly' ? 'text-green-500 border-green-500  hover:text-white hover:border-white hover:bg-green-500' :
                         currentStatus === 'Enemy' ? 'text-red-500 border-red-500 hover:text-white hover:border-white hover:bg-red-500' :
                         currentStatus === 'Unknown' ? 'text-yellow-500 border-yellow-500  hover:text-white hover:border-white hover:bg-yellow-500' :

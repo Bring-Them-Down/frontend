@@ -26,23 +26,23 @@ function App() {
         </div>
         
         {/* Three divs container */}
-        <div className="flex justify-center items-stretch gap-8 w-full max-w-5xl flex-wrap">
-          <div className="flex-1 min-w-32 p-8 bg-gray-50 rounded-lg shadow-md text-center">
-            <DroneStatus status="Friendly" />
+        <div className="flex justify-center items-stretch gap-8 w-full max-w-5xl flex-wrap ">
+          <div className="flex-1 max-w-[256px] p-8 bg-gray-50 rounded-lg shadow-md text-center justify-center flex ">
+            <DroneStatus status="No Signal" />
           </div>
-          <div className="flex-1 min-w-100 p-4 bg-gray-50 rounded-lg shadow-md text-center">
+          <div className="flex-1 min-w-100 p-4 bg-gray-50 rounded-lg shadow-md text-center ">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">Section 2</h3>
             <p className="text-gray-600 leading-relaxed">Content for second section</p>
           </div>
-          <div className="flex-1 min-w-40 p-4 bg-gray-50 rounded-lg shadow-md text-center flex items-center justify-center">
+          <div className="flex-1 max-w-20 p-4 bg-gray-50 rounded-lg shadow-md text-center flex items-center justify-center flex min-w-[256px]">
             {/* WiFi button positioned absolutely */}
             <WifiModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
             <button
               title="Wifi Devices"
               onClick={() => setIsOpen(true)}
-              className="flex flex-row items-center gap-2 w-fit cursor-pointer hover:bg-gray-100 px-2 py-1 rounded-md border border-gray-200"
+              className="flex flex-row text-xl items-center gap-2 cursor-pointer hover:bg-gray-100 p-4 rounded-md border border-gray-200 min-w-[194px] justify-center"
             >
-              <WifiIcon />
+              <WifiIcon height={30} width={30} />
               Wifi Devices
             </button>
           </div>
