@@ -28,9 +28,7 @@ function App() {
         {/* Three divs container */}
         <div className="flex justify-center items-stretch gap-8 w-full max-w-5xl flex-wrap">
           <div className="flex-1 min-w-32 p-8 bg-gray-50 rounded-lg shadow-md text-center">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Section 1</h3>
-            <p className="text-gray-600 leading-relaxed">Content for first section</p>
-            <DroneStatus status="Enemy" />
+            <DroneStatus status="Friendly" />
           </div>
           <div className="flex-1 min-w-128 p-8 bg-gray-50 rounded-lg shadow-md text-center">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">Section 2</h3>
@@ -51,7 +49,6 @@ function App() {
         </div>
       </div>
     </div>
-
   );
 }
 
