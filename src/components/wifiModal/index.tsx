@@ -2,17 +2,13 @@ import { useEffect, useRef, useState } from "react";
 
 export interface IWifiModalProps {
   isOpen: boolean;
-  setIsOpen: (i: boolean) => void;
   onClose: () => void;
 }
 
-export default function WifiModal({
-  isOpen,
-  setIsOpen,
-  onClose,
-}: IWifiModalProps) {
+export default function WifiModal({ isOpen, onClose }: IWifiModalProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
+
   const [items, setItems] = useState<
     {
       id: string;
@@ -24,13 +20,11 @@ export default function WifiModal({
   useEffect(() => {
     if (!isOpen) {
       ref.current = null;
-      setIsOpen(false);
       return;
     }
 
     const handleClickOutside = (event: globalThis.MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
-        setIsOpen(false);
         onClose();
       }
     };

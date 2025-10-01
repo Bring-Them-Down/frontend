@@ -7,11 +7,7 @@ function App() {
 
   return (
     <>
-      <WifiModal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        onClose={() => setIsOpen(false)}
-      />
+      <WifiModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
       <button
         title="Wifi Devices"
         onClick={() => setIsOpen(true)}
