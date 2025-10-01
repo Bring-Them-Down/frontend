@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @theme {
-  --font-special-elite: "Special Elite", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-special-elite: "Special Elite", ui-serif, Georgia, Cambria,
+    "Times New Roman", Times, serif;
 }
 
 * {
@@ -16,6 +17,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-y: hidden;
+  background-image: url("./assets/Untitled.webp");
 }
 
 #root {
