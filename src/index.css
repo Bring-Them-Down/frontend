@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@theme {
+  --font-special-elite: "Special Elite", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
 
 * {
   box-sizing: border-box;
