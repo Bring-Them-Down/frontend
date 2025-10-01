@@ -11,13 +11,13 @@ function App() {
 
       
       {/* Main content area */}
-      <div className="min-h-screen flex flex-col items-center justify-center p-8 gap-12">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 gap-12">
         {/* Video component container */}
         <div className="flex justify-center items-center">
           <video 
             className="max-w-full h-auto rounded-lg shadow-lg"
             controls
-            width="1066"
+            width="1024"
             height="600"
           >
             <source src="#" type="video/mp4" />
@@ -27,14 +27,14 @@ function App() {
         
         {/* Three divs container */}
         <div className="flex justify-center items-stretch gap-8 w-full max-w-5xl flex-wrap">
-          <div className="flex-1 min-w-32 p-8 bg-gray-50 rounded-lg shadow-md text-center">
-            <DroneStatus status="Friendly" />
+          <div className="flex-1 min-w-40 p-4 bg-gray-50 rounded-lg shadow-md text-center items-center justify-center flex">
+            <DroneStatus status="No Signal" />
           </div>
-          <div className="flex-1 min-w-128 p-8 bg-gray-50 rounded-lg shadow-md text-center">
+          <div className="flex-1 min-w-100 p-4 bg-gray-50 rounded-lg shadow-md text-center">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">Section 2</h3>
             <p className="text-gray-600 leading-relaxed">Content for second section</p>
           </div>
-          <div className="flex-1 min-w-32 p-8 bg-gray-50 rounded-lg shadow-md text-center align-middle justify-center">
+          <div className="flex-1 min-w-40 p-4 bg-gray-50 rounded-lg shadow-md text-center flex items-center justify-center">
             {/* WiFi button positioned absolutely */}
             <WifiModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
             <button
