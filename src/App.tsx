@@ -27,8 +27,8 @@ function App() {
         
         {/* Three divs container */}
         <div className="flex justify-center items-stretch gap-8 w-full max-w-5xl flex-wrap">
-          <div className="flex-1 min-w-40 p-4 bg-gray-50 rounded-lg shadow-md text-center items-center justify-center flex">
-            <DroneStatus status="No Signal" />
+          <div className="flex-1 min-w-32 p-8 bg-gray-50 rounded-lg shadow-md text-center">
+            <DroneStatus status="Friendly" />
           </div>
           <div className="flex-1 min-w-100 p-4 bg-gray-50 rounded-lg shadow-md text-center">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">Section 2</h3>
