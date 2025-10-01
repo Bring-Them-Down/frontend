@@ -1,17 +1,13 @@
 import { useState } from "react";
-import WifiModal from "./wifiModal";
-import WifiIcon from "./wifiIcon";
+import WifiModal from "./components/wifiModal";
+import WifiIcon from "./components/wifiIcon";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="min-h-screen relative">
-      <WifiModal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        onClose={() => setIsOpen(false)}
-      />
+
       
       {/* Main content area */}
       <div className="min-h-screen flex flex-col items-center justify-center p-8 gap-12">
@@ -50,10 +46,17 @@ function App() {
         className="absolute top-8 right-8 flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 text-sm font-medium"
         onClick={() => setIsOpen(true)}
       >
+      </button>
+      <WifiModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <button
+        title="Wifi Devices"
+        onClick={() => setIsOpen(true)}
+        className="flex flex-row items-center gap-2 w-fit cursor-pointer hover:bg-gray-100 px-2 py-1 rounded-md border border-gray-200"
+      >
         <WifiIcon />
         Wifi Devices
       </button>
-    </div>
+</div>
   );
 }
 
