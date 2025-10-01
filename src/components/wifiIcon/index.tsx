@@ -1,7 +1,7 @@
 export default function WifiIcon({ height, width }: { height: number; width: number }) {
 
   return (
-    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#000000" width={width} height={height}>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" width={width} height={height}>
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
@@ -10,7 +10,7 @@ export default function WifiIcon({ height, width }: { height: number; width: num
       ></g>
       <g id="SVGRepo_iconCarrier">
         <defs>
-          <style>{`.a{fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round}`}</style>
+          <style>{`.a{fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round}`}</style>
         </defs>
         <path
           className="a"
