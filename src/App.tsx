@@ -3,6 +3,7 @@ import WifiModal from "./components/wifiModal";
 import WifiIcon from "./components/wifiIcon";
 import DroneStatus from "./components/droneStatus/droneStatus";
 import AudioVisualiser from "./components/audioVisualiser";
+import Crosshair from "./assets/Crosshair.svg";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,6 +38,12 @@ function App() {
                 Your browser does not support the video tag.
               </video>
 
+              {/* Crosshair */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <img src={Crosshair} alt="Crosshair" className="max-w-[10%] max-h-[10%]" />
+              </div>
+
+              {/* Direction alerts */}
               {activeSide === "right" && (
                 <div className="absolute inset-y-0 right-0 w-[10%] h-[100%] pointer-events-none bg-[radial-gradient(ellipse_at_right_center,rgba(249,115,22,1)_10%,rgba(249,115,22,0)_72%)]"></div>
               )}
