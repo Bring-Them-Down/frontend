@@ -13,7 +13,7 @@ function App() {
     // Replace setInterval with real mic data.
     const interval = setInterval(() => {
       setActiveSide((prev) => (prev === "left" ? "right" : "left"));
-    }, 2000);
+    }, 500);
 
     return () => clearInterval(interval);
   }, []);
@@ -63,7 +63,7 @@ function App() {
             <button
               title="Wifi Devices"
               onClick={() => setIsOpen(true)}
-              className="flex flex-row text-xl text-white items-center gap-2 cursor-pointer hover:bg-black p-4 rounded-md border border-gray-200 min-w-[194px] justify-center"
+              className="flex flex-row text-xl text-white items-center gap-2 cursor-pointer hover:bg-stone-950/35 p-4 rounded-md border border-gray-200 min-w-[194px] justify-center"
             >
               <WifiIcon height={30} width={30} />
               Wifi Devices
