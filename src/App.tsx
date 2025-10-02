@@ -50,14 +50,14 @@ function App() {
 
         {/* Three divs container */}
         <div className="flex justify-center items-stretch gap-8 w-full max-w-5xl flex-wrap ">
-          <div className="flex-1 p-1 rounded-lg shadow-md text-center justify-center flex w-[256px] items-center">
+          <div className="flex-1 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
             <DroneStatus status="Friendly" />
           </div>
-          <div className="flex-1 min-w-96 p-1 rounded-lg shadow-md text-center">
+          <div className="flex-1 min-w-96 p-1 rounded-lg text-center">
             <AudioVisualiser />
 
           </div>
-          <div className="flex-1 p-1 rounded-lg shadow-md text-center flex items-center justify-center flex w-[256px]">
+          <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center flex w-[256px]">
             {/* WiFi button positioned absolutely */}
             <WifiModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
             <button
