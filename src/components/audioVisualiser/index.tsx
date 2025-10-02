@@ -91,22 +91,7 @@ export default function AudioVisualiser() {
       {!isStarted && (
         <button
           onClick={handleStart}
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            padding: "12px 24px",
-            fontSize: "16px",
-            cursor: "pointer",
-            backgroundColor: "#6366f1",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            fontWeight: "600",
-            zIndex: 10,
-            pointerEvents: "auto",
-          }}
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-teal-500 px-4 py-2 text-xl rounded-md hover:bg-opacity-90 border-1 border-teal-500 w-[194px] h-[64px] hover:bg-teal-500 hover:text-white hover:cursor-pointer "
         >
           Start Visualizer
         </button>

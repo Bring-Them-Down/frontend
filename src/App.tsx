@@ -3,6 +3,7 @@ import WifiModal from "./components/wifiModal";
 import WifiIcon from "./components/wifiIcon";
 import DroneStatus from "./components/droneStatus/droneStatus";
 import AudioVisualiser from "./components/audioVisualiser";
+import VideoPlayer from "./components/videoPlayer";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,16 +28,7 @@ function App() {
           {/* Video + overlay container */}
           <div className="flex justify-center items-center">
             <div className="relative">
-              <video
-                className="max-w-full h-auto rounded-lg shadow-lg"
-                controls
-                width="1024"
-                height="600"
-              >
-                <source src="#" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-
+              <VideoPlayer />
               {activeSide === "right" && (
                 <div className="absolute inset-y-0 right-0 w-[10%] h-[100%] pointer-events-none bg-[radial-gradient(ellipse_at_right_center,rgba(249,115,22,1)_10%,rgba(249,115,22,0)_72%)]"></div>
               )}
@@ -51,7 +43,7 @@ function App() {
         {/* Three divs container */}
         <div className="flex justify-center items-stretch gap-8 w-full max-w-5xl flex-wrap ">
           <div className="flex-1 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
-            <DroneStatus status="Friendly" />
+            <DroneStatus status="Enemy" />
           </div>
           <div className="flex-1 min-w-96 p-1 rounded-lg text-center">
             <AudioVisualiser />
