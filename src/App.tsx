@@ -15,7 +15,7 @@ function App() {
       setActiveSide((prev) => (prev === "left" ? "right" : "left"));
     }, 2000);
 
-    return () => clearInterval(interval); // cleanup
+    return () => clearInterval(interval);
   }, []);
 
   return (
