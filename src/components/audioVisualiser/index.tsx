@@ -70,7 +70,7 @@ export default function AudioVisualiser() {
       for (let i = 0; i < bufferLength; i++) {
         const barHeight =
           dataArray[i] > 100 ? dataArray[i] * 0.7 : dataArray[i] * 1.2;
-        ctx.fillStyle = `rgb(${barHeight + 100}, 50, 150)`;
+        ctx.fillStyle = `rgb(${barHeight + 100}, 140, 0)`;
         ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
         x += barWidth + 1;
       }

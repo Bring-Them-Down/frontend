@@ -4,6 +4,7 @@ import DroneStatus from "./components/droneStatus/droneStatus";
 import AudioVisualiser from "./components/audioVisualiser";
 import Crosshair from "./assets/Crosshair.svg";
 import VideoPlayer from "./components/videoPlayer";
+import GalleriModal from "./components/galleriModal";
 
 function App() {
   const [activeSide, setActiveSide] = useState<"left" | "right" | null>(null);
@@ -27,7 +28,7 @@ function App() {
           <div className="flex justify-center items-center">
             <div className="relative">
               <VideoPlayer />
-              
+
               {/* Crosshair */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <img
@@ -57,6 +58,7 @@ function App() {
           <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center flex w-[256px]">
             {/* WiFi button positioned absolutely */}
             <WifiModal />
+            <GalleriModal />
           </div>
         </div>
       </div>
