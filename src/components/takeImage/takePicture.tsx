@@ -1,16 +1,17 @@
+import Camera from "../controls/camera";
+
 type TakePictureProps = {
-  label: string;
   onClick?: () => void;
 };
 
-const TakePicture: React.FC<TakePictureProps> = ({ label, onClick }) => {
+const TakePicture: React.FC<TakePictureProps> = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
       className='relative flex items-center justify-center font-["Special_Elite"] 
-                 text-white text-xl rounded-lg p-4 cursor-pointer min-w-[204px] min-h-[68px] border-2 hover:bg-stone-950/35'
+                 text-white text-xl rounded-lg p-4 cursor-pointer border-2 hover:bg-stone-950/35'
     >
-      <span className="pt-1.5">{label}</span>
+    <Camera color="#fff" size={40}/>
     </button>
   );
 };
