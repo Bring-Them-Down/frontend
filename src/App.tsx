@@ -4,6 +4,7 @@ import DroneStatus from "./components/droneStatus/droneStatus";
 import { Toaster, toast } from "react-hot-toast";
 import AudioVisualiser from "./components/audioVisualiser";
 import Crosshair from "./assets/Crosshair.svg";
+import VideoPlayer from "./components/videoPlayer";
 import TakePicture from "./components/takeImage/takePicture";
 
 function App() {
@@ -35,15 +36,8 @@ function App() {
           {/* Video + overlay container */}
           <div className="flex justify-center items-center">
             <div className="relative">
-              <video
-                className="max-w-full h-auto rounded-lg shadow-lg"
-                controls
-                width="1024"
-                height="600"
-              >
-                <source src="#" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <VideoPlayer />
+              
               {/* Crosshair */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <img
