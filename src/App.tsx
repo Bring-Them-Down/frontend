@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import WifiModal from "./components/wifiModal";
 import DroneStatus from "./components/droneStatus/droneStatus";
+import { Toaster, toast } from "react-hot-toast";
 import AudioVisualiser from "./components/audioVisualiser";
 import Crosshair from "./assets/Crosshair.svg";
 import VideoPlayer from "./components/videoPlayer";
+import TakePicture from "./components/takeImage/takePicture";
+import GalleriModal from "./components/galleriModal";
 
 function App() {
   const [activeSide, setActiveSide] = useState<"left" | "right" | null>(null);
@@ -17,6 +20,14 @@ function App() {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Toast logic here
+    const handleTakePicture = () => {
+    toast.success("Picture Taken!", {
+      duration: 3000,
+      style: { background: "#333", color: "#fff" },
+    });
+  };
 
   return (
     <div className="min-h-screen relative">
@@ -57,6 +68,7 @@ function App() {
               {/* WiFi button positioned absolutely */}
               <WifiModal />
             </div>
+            <TakePicture label='Take Picture' onClick={handleTakePicture} />
           </div>
 
           {/* Center Column */}
@@ -83,6 +95,8 @@ function App() {
           </div>
         </div>
       </div>
+      {/* Toaster */}
+      <Toaster position="bottom-right" />
     </div>
   );
 }
