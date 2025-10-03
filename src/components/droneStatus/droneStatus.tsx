@@ -34,11 +34,11 @@ const DroneStatus = ({ status }: { status: DroneStatusType }) => {
 
   return (
     <button
-      className={`relative flex items-center justify-center border-2 border-dashed font-['Special_Elite'] text-xl rounded-lg px-6 py-5 cursor-pointer min-w-[202px] max-h-[74px] overflow-visible hover:animate-pulse hover:[animation-duration:0.45s] ${colorClasses}`}
+      className={`relative flex items-center justify-center border-2 border-dashed font-['Special_Elite'] text-xl rounded-lg p-3 cursor-pointer min-w-[204px] min-h-[68px] overflow-visible hover:animate-pulse hover:[animation-duration:0.45s] ${colorClasses}`}
       onMouseEnter={hoverProps.onMouseEnter}
       onMouseLeave={hoverProps.onMouseLeave}
     >
-        {hoverProps.text}
+       <span className="pt-1.5">{hoverProps.text}</span> 
     </button>
   );
 };

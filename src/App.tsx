@@ -68,7 +68,7 @@ function App() {
               {/* WiFi button positioned absolutely */}
               <WifiModal />
             </div>
-            <TakePicture label='Take Picture' onClick={handleTakePicture} />
+            
           </div>
 
           {/* Center Column */}
@@ -80,23 +80,14 @@ function App() {
 
           {/* Right Column */}
           <div className="flex flex-col items-center justify-center gap-4">
-            <button
-              title="Button 1"
-              className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 w-[194px] h-[64px]"
-            >
-              Take picture
-            </button>
-            <button
-              title="Button 2"
-              className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 w-[194px] h-[64px]"
-            >
-              Gallery
-            </button>
+            <TakePicture label='Take Picture' onClick={handleTakePicture} />
+            <GalleriModal />
           </div>
         </div>
       </div>
       {/* Toaster */}
       <Toaster position="bottom-right" />
+      
     </div>
   );
 }

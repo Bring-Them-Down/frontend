@@ -48,10 +48,10 @@ export default function WifiModal() {
       <button
         title="Wifi Devices"
         onClick={() => setIsOpen(true)}
-        className="flex flex-row text-xl text-white items-center gap-2 cursor-pointer hover:bg-stone-950/35 p-4 rounded-md border border-gray-200 min-w-[194px] justify-center"
+        className="flex flex-row text-xl text-white items-center gap-2 cursor-pointer hover:bg-stone-950/35 p-3 font-['Special_Elite'] rounded-md border border-gray-200 min-w-[204px] min-h-[68px] justify-center"
       >
-        <WifiIcon height={30} width={30} />
-        Wifi Devices
+        <WifiIcon height={40} width={40} />
+        <span className="pt-1.5">Wifi Devices</span>
       </button>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         {loading ? (

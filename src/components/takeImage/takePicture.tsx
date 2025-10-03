@@ -8,9 +8,9 @@ const TakePicture: React.FC<TakePictureProps> = ({ label, onClick }) => {
     <button
       onClick={onClick}
       className='relative flex items-center justify-center font-["Special_Elite"] 
-                 text-white text-xl rounded-lg px-6 py-5 cursor-pointer min-w-[202px] border-2'
+                 text-white text-xl rounded-lg p-4 cursor-pointer min-w-[204px] min-h-[68px] border-2 hover:bg-stone-950/35'
     >
-      {label}
+      <span className="pt-1.5">{label}</span>
     </button>
   );
 };
