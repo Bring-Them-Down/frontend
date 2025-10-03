@@ -1,8 +1,8 @@
-import ArrowDown from './arrowDown'
+import ArrowDown from './SvgComponents/arrowDown'
 import TakePicture from '../takeImage/takePicture'
-import ArrowUp from './arrowUp';
-import ArrowLeft from './arrowLeft';
-import ArrowRight from './arrowRight';
+import ArrowUp from './SvgComponents/arrowUp';
+import ArrowLeft from './SvgComponents/arrowLeft';
+import ArrowRight from './SvgComponents/arrowRight';
 
 interface ControlProps {
     onClick?: () => void;
@@ -16,7 +16,7 @@ const Controls = (controlProps: ControlProps) => {
     <div className='flex flex-col items-center justify-center gap-4'>
         <div className='flex justify-between w-full'>
             <TakePicture onClick={controlProps.onClick} />
-            <TakePicture onClick={controlProps.onClick} />
+            {/* <DroneShooting /> */}
         </div>
         <div>
             <div className='flex items-center justify-center'>

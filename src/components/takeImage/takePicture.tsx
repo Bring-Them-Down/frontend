@@ -1,4 +1,4 @@
-import Camera from "../controls/camera";
+import Camera from "../controls/SvgComponents/camera";
 
 type TakePictureProps = {
   onClick?: () => void;
