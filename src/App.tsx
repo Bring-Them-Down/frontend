@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import WifiModal from "./components/wifiModal";
 import DroneStatus from "./components/droneStatus/droneStatus";
+import { Toaster, toast } from "react-hot-toast";
 import AudioVisualiser from "./components/audioVisualiser";
 import Crosshair from "./assets/Crosshair.svg";
+import TakePicture from "./components/takeImage/takePicture";
 
 function App() {
   const [activeSide, setActiveSide] = useState<"left" | "right" | null>(null);
@@ -16,6 +18,14 @@ function App() {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Toast logic here
+    const handleTakePicture = () => {
+    toast.success("Picture Taken!", {
+      duration: 3000,
+      style: { background: "#333", color: "#fff" },
+    });
+  };
 
   return (
     <div className="min-h-screen relative">
@@ -55,17 +65,20 @@ function App() {
         {/* Three divs container */}
         <div className="flex justify-center items-stretch gap-8 w-full max-w-5xl flex-wrap ">
           <div className="flex-1 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
-            <DroneStatus status="Friendly" />
+            <DroneStatus status="Enemy" />
+            <TakePicture label='Take Picture' onClick={handleTakePicture} />
           </div>
           <div className="flex-1 min-w-96 p-1 rounded-lg text-center">
             <AudioVisualiser />
           </div>
-          <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center flex w-[256px]">
+          <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center w-[256px]">
             {/* WiFi button positioned absolutely */}
             <WifiModal />
           </div>
         </div>
       </div>
+      {/* Toaster */}
+      <Toaster position="bottom-right" />
     </div>
   );
 }
