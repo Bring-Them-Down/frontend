@@ -27,15 +27,7 @@ function App() {
           <div className="flex justify-center items-center">
             <div className="relative">
               <VideoPlayer />
-              <video
-                className="max-w-full h-auto rounded-lg shadow-lg"
-                controls
-                width="1024"
-                height="600"
-              >
-                <source src="#" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              
               {/* Crosshair */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <img
