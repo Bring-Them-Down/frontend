@@ -27,7 +27,7 @@ function App() {
           <div className="flex justify-center items-center">
             <div className="relative">
               <VideoPlayer />
-              
+
               {/* Crosshair */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <img
@@ -47,16 +47,39 @@ function App() {
           </div>
         </div>
         {/* Three divs container */}
-        <div className="flex justify-center items-stretch gap-8 w-full max-w-5xl flex-wrap ">
-          <div className="flex-1 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
-            <DroneStatus status="Enemy" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-5xl h-full">
+          {/* Left Column */}
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="flex-1 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
+              <DroneStatus status="Enemy" />
+            </div>
+            <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center flex w-[256px]">
+              {/* WiFi button positioned absolutely */}
+              <WifiModal />
+            </div>
           </div>
-          <div className="flex-1 min-w-96 p-1 rounded-lg text-center">
-            <AudioVisualiser />
+
+          {/* Center Column */}
+          <div className="flex items-center justify-center">
+            <div className="flex-1 min-w-96 p-1 rounded-lg text-center">
+              <AudioVisualiser />
+            </div>
           </div>
-          <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center flex w-[256px]">
-            {/* WiFi button positioned absolutely */}
-            <WifiModal />
+
+          {/* Right Column */}
+          <div className="flex flex-col items-center justify-center gap-4">
+            <button
+              title="Button 1"
+              className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 w-[194px] h-[64px]"
+            >
+              Take picture
+            </button>
+            <button
+              title="Button 2"
+              className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 w-[194px] h-[64px]"
+            >
+              Gallery
+            </button>
           </div>
         </div>
       </div>
