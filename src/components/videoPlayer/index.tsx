@@ -7,7 +7,6 @@ const VideoPlayer = () => {
       src={mockVideo}
       autoPlay
       loop
-      controls
       className="max-w-full h-auto rounded-lg shadow-lg"
       width="1024"
       height="600"
