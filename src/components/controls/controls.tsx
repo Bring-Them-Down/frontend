@@ -1,8 +1,9 @@
 import ArrowDown from './SvgComponents/arrowDown'
 import TakePicture from '../takeImage/takePicture'
-import ArrowUp from './arrowUp';
-import ArrowLeft from './arrowLeft';
-import ArrowRight from './arrowRight';
+import ArrowUp from './SvgComponents/arrowUp'
+import ArrowLeft from './SvgComponents/arrowLeft'
+import ArrowRight from './SvgComponents/arrowRight'
+
 
 const Controls = () => {
 
