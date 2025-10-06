@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import WifiModal from "./components/wifiModal";
+import LogModal from "./components/logModal";
 import DroneStatus from "./components/droneStatus/droneStatus";
 import AudioVisualiser from "./components/audioVisualiser";
 import Crosshair from "./assets/Crosshair.svg";
@@ -8,6 +8,7 @@ import GalleriModal from "./components/galleriModal";
 import { FollowCursor } from "./components/followCursor";
 import Controls from "./components/controls/controls";
 import { Toaster } from "react-hot-toast";
+import { AiThing } from "./components/aiThing";
 
 function App() {
   const [activeSide, setActiveSide] = useState<"left" | "right" | null>(null);
@@ -50,36 +51,35 @@ function App() {
           </div>
         </div>
         {/* Three divs container */}
-        <div >
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-6xl h-full">
-
-          {/* Left Column */}
-          <div className="flex flex-col items-center justify-center h-full">
-            <div className="flex mt-6 rounded-lg text-center justify-center items-center w-[256px] h-full">
-              <Controls />
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-5xl h-full">
+            {/* Left Column */}
+            <div className="flex flex-col items-center justify-center gap-4">
+              <div className="flex-1 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
+                <Controls />
+              </div>
+              <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center w-[256px]"></div>
             </div>
 
-            
-          </div>
-
-          {/* Center Column */}
-          <div className="flex items-center justify-center">
-            <div className="flex-1 min-w-128 p-1 rounded-lg text-center">
-              <AudioVisualiser />
+            {/* Center Column */}
+            <div className="flex items-center justify-center">
+              <div className="flex-1 min-w-96 p-1 rounded-lg text-center">
+                <AudioVisualiser />
+              </div>
             </div>
-          </div>
 
-          {/* Right Column */}
-          <div className="flex flex-col items-center justify-center gap-8">
-            <DroneStatus status="Friendly" />
-            {/* WiFi button positioned absolutely */}
-            <WifiModal />
-            <GalleriModal />
+            {/* Right Column */}
+            <div className="flex flex-col items-center justify-center gap-4">
+              <DroneStatus status="Friendly" />
+              {/* WiFi button positioned absolutely */}
+              <LogModal />
+              <GalleriModal />
+              <AiThing />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-        {/* Toaster */}
+      {/* Toaster */}
       <Toaster position="bottom-right" />
       <FollowCursor />
     </div>
