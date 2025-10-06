@@ -4,12 +4,14 @@ interface DroneProps {
   color?: string;
   size?: number | string;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 const Drone: React.FC<DroneProps> = ({ 
   color = "#000000", 
   size = 24, 
-  className 
+  className,
+  style
 }) => {
   return (
     <svg 
@@ -18,6 +20,7 @@ const Drone: React.FC<DroneProps> = ({
       viewBox="0 0 512 512" 
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      style={style}
     >
       <g>
         <rect x="445.217" y="111.159" style={{fill: "#315C7C"}} width="44.522" height="66.783"/>
