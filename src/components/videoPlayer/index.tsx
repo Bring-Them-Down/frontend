@@ -1,9 +1,9 @@
-import React from "react";
 import mockVideo from "../../assets/mock-video.mp4";
 
 const VideoPlayer = () => {
   return (
     <video
+      id="videoPlayer"
       src={mockVideo}
       autoPlay
       loop
