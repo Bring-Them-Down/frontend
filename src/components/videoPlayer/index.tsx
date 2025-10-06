@@ -1,12 +1,8 @@
-import mockVideo from "../../assets/mock-video.mp4";
-
 const VideoPlayer = () => {
   return (
-    <video
+    <iframe
       id="videoPlayer"
-      src={mockVideo}
-      autoPlay
-      loop
+      src={"http://192.168.0.238:8889/mystream/"}
       className="max-w-full h-auto rounded-lg shadow-lg"
       width="1024"
       height="600"
