@@ -95,7 +95,7 @@ export default function AudioVisualiser() {
         loop
         style={{ display: "none" }}
       />
-      <canvas ref={canvasRef} width={450} height={200} />
+      <canvas ref={canvasRef} width={450} height={200} className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
       {!isStarted && (
         <button
           onClick={handleStart}

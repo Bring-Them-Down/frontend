@@ -51,7 +51,7 @@ function App() {
         </div>
         {/* Three divs container */}
         <div >
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-5xl h-full">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-6xl h-full">
 
           {/* Left Column */}
           <div className="flex flex-col items-center justify-center gap-4">
@@ -66,7 +66,7 @@ function App() {
 
           {/* Center Column */}
           <div className="flex items-center justify-center">
-            <div className="flex-1 min-w-96 p-1 rounded-lg text-center">
+            <div className="flex-1 min-w-128 p-1 rounded-lg text-center">
               <AudioVisualiser />
             </div>
           </div>
@@ -77,13 +77,6 @@ function App() {
             {/* WiFi button positioned absolutely */}
             <WifiModal />
             <GalleriModal />
-            <div>
-              <button
-                className='relative flex items-center justify-center font-["Special_Elite"] text-white text-xl rounded-lg p-4 cursor-pointer min-w-[204px] min-h-[68px] border-2 hover:bg-stone-950/35'
-              >
-                <span className="pt-1.5">Logs</span>
-              </button>
-            </div>
           </div>
         </div>
       </div>
