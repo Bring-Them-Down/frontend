@@ -54,13 +54,11 @@ function App() {
   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-6xl h-full">
 
           {/* Left Column */}
-          <div className="flex flex-col items-center justify-center gap-4">
-            <div className="flex-1 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
+          <div className="flex flex-col items-center justify-center h-full">
+            <div className="flex mt-6 rounded-lg text-center justify-center items-center w-[256px] h-full">
               <Controls />
             </div>
-            <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center w-[256px]">
 
-            </div>
             
           </div>
 
@@ -72,7 +70,7 @@ function App() {
           </div>
 
           {/* Right Column */}
-          <div className="flex flex-col items-center justify-center gap-4">
+          <div className="flex flex-col items-center justify-center gap-8">
             <DroneStatus status="Friendly" />
             {/* WiFi button positioned absolutely */}
             <WifiModal />
