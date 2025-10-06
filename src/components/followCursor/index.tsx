@@ -26,8 +26,7 @@ export function FollowCursor({
         e.clientY ??
         (e.touches && e.touches[0]?.clientY) ??
         targetRef.current.y;
-      // offset the target so the follower trails behind the cursor
-      const offset = 40; // distance behind cursor
+      const offset = 40;
       targetRef.current.x = x - offset;
       targetRef.current.y = y - offset;
     }
