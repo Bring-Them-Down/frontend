@@ -3,6 +3,7 @@ import TakePicture from '../takeImage/takePicture'
 import ArrowUp from './arrowUp';
 import ArrowLeft from './arrowLeft';
 import ArrowRight from './arrowRight';
+import ShootDrone from '../shootdrone/shootDrone';
 
 const Controls = () => {
 
@@ -12,7 +13,7 @@ const Controls = () => {
     <div className='flex flex-col items-center justify-center gap-1 w-[204px]'>
         <div className='flex justify-between w-full'>
             <TakePicture />
-            <TakePicture />
+            <ShootDrone />
         </div>
         <div >
             <div className='flex items-center justify-center cursor-pointer'>
