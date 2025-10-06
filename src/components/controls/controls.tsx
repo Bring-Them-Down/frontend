@@ -1,31 +1,84 @@
+import { useState, useEffect } from 'react';
 import ArrowDown from './arrowDown'
 import TakePicture from '../takeImage/takePicture'
 import ArrowUp from './arrowUp';
 import ArrowLeft from './arrowLeft';
 import ArrowRight from './arrowRight';
+import ShootDrone from '../shootdrone/shootDrone';
+import Drone from './drone';
 
 const Controls = () => {
+  const [dronePosition, setDronePosition] = useState({ x: 0, y: 0 });
 
+  const moveDrone = (direction: string) => {
+    const MOVE_DISTANCE = 20;
+    
+    switch(direction) {
+      case 'up':
+        setDronePosition(prev => ({ ...prev, y: prev.y - MOVE_DISTANCE }));
+        break;
+      case 'down':
+        setDronePosition(prev => ({ ...prev, y: prev.y + MOVE_DISTANCE }));
+        break;
+      case 'left':
+        setDronePosition(prev => ({ ...prev, x: prev.x - MOVE_DISTANCE }));
+        break;
+      case 'right':
+        setDronePosition(prev => ({ ...prev, x: prev.x + MOVE_DISTANCE }));
+        break;
+    }
+  };
 
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      switch(event.key) {
+        case 'ArrowUp':
+          moveDrone('up');
+          break;
+        case 'ArrowDown':
+          moveDrone('down');
+          break;
+        case 'ArrowLeft':
+          moveDrone('left');
+          break;
+        case 'ArrowRight':
+          moveDrone('right');
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, []);
   
   return (
-    <div className='flex flex-col items-center justify-center gap-4'>
+    <div className='flex flex-col items-center justify-center gap-1 w-[204px]'>
         <div className='flex justify-between w-full'>
             <TakePicture />
-            <TakePicture />
+            <ShootDrone />
+        </div>
+        <div >
+            <div className='flex items-center justify-center cursor-pointer'>
+            <div className='hover:scale-120 transition-transform duration-200'><ArrowUp onClick={() => moveDrone('up')} size={80} color='#FFF' hoverColor='#6b7280'/></div>
+            </div>
+            <div className='flex gap-4 cursor-pointer justify-center items-center'>
+            <div className='hover:scale-120 transition-transform duration-200'><ArrowLeft onClick={() => moveDrone('left')} size={80} color='#FFF' hoverColor='#6b7280'/></div>
+            <button className='flex items-center justify-center font-[Special_Elite] text-white border-2 rounded-lg border-white w-[60px] h-[60px] cursor-pointer hover:bg-stone-950/35 pt-1'>Auto</button>
+            <div className='hover:scale-120 transition-transform duration-200'><ArrowRight onClick={() => moveDrone('right')} size={80} color='#FFF' hoverColor='#6b7280'/></div>
+            </div>
+            <div className='flex items-center justify-center cursor-pointer'>
+            <div className='hover:scale-120 transition-transform duration-200'><ArrowDown onClick={() => moveDrone('down')} size={80} color='#FFF' hoverColor='#6b7280'/></div>
+            </div>
         </div>
         <div>
-            <div className='flex items-center justify-center cursor-pointer'>
-            <div><ArrowUp size={80} color='#FFF'/></div>
-            </div>
-            <div className='flex gap-4 cursor-pointer'>
-            <div><ArrowLeft size={80} color='#FFF'/></div>
-            <button className='flex items-center justify-center font-[Special_Elite] text-white border-2 border-white w-[70px] h-[70px] cursor-pointer hover:bg-stone-950/35'>Auto</button>
-            <div><ArrowRight size={80} color='#FFF'/></div>
-            </div>
-            <div className='flex items-center justify-center cursor-pointer'>
-            <div><ArrowDown size={80} color='#FFF'/></div>
-            </div>
+            <Drone 
+              size={80} 
+              color='#FFF' 
+              className='z-100 transition-transform duration-200' 
+              style={{
+                transform: `translate(${dronePosition.x}px, ${dronePosition.y}px)`
+              }}
+            />
         </div>
     </div>
   )
