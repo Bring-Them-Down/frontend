@@ -1,12 +1,7 @@
 import { toast } from "react-hot-toast";
-
 import Camera from "../controls/camera";
 
-type TakePictureProps = {
-  label: string;
-};
-
-const TakePicture: React.FC<TakePictureProps> = ({ label }) => {
+const TakePicture: React.FC = () => {
   const handleTakePicture = () => {
     try {
       const video = document.getElementById("videoPlayer") as HTMLVideoElement;

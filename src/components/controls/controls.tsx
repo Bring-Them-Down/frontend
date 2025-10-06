@@ -4,19 +4,15 @@ import ArrowUp from './arrowUp';
 import ArrowLeft from './arrowLeft';
 import ArrowRight from './arrowRight';
 
-interface ControlProps {
-    onClick?: () => void;
-}
-
-const Controls = (controlProps: ControlProps) => {
+const Controls = () => {
 
 
   
   return (
     <div className='flex flex-col items-center justify-center gap-4'>
         <div className='flex justify-between w-full'>
-            <TakePicture onClick={controlProps.onClick} />
-            <TakePicture onClick={controlProps.onClick} />
+            <TakePicture />
+            <TakePicture />
         </div>
         <div>
             <div className='flex items-center justify-center cursor-pointer'>
