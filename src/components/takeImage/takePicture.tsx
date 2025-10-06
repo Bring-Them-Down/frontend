@@ -1,11 +1,5 @@
 import { toast } from "react-hot-toast";
-import Camera from "../controls/SvgComponents/camera";
-
-
-// Define props type (empty for now, update if you need props later)
-
-
-
+import Camera from "../controls/camera";
 
 const TakePicture: React.FC = () => {
   const handleTakePicture = () => {
