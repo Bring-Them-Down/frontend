@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
-import { DroneIcon } from "../droneIcon";
+import DroneIcon from "../DroneIcon";
+
 
 export function FollowCursor({
   size = 48,

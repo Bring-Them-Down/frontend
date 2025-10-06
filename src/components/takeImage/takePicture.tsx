@@ -1,11 +1,13 @@
 import { toast } from "react-hot-toast";
 import Camera from "../controls/SvgComponents/camera";
 
-type TakePictureProps = {
-  label: string;
-};
 
-const TakePicture: React.FC<TakePictureProps> = ({ label }) => {
+// Define props type (empty for now, update if you need props later)
+
+
+
+
+const TakePicture: React.FC = () => {
   const handleTakePicture = () => {
     try {
       const video = document.getElementById("videoPlayer") as HTMLVideoElement;

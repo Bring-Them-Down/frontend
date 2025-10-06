@@ -4,18 +4,15 @@ import ArrowUp from './SvgComponents/arrowUp';
 import ArrowLeft from './SvgComponents/arrowLeft';
 import ArrowRight from './SvgComponents/arrowRight';
 
-interface ControlProps {
-    onClick?: () => void;
-}
-
-const Controls = (controlProps: ControlProps) => {
 
 
+
+const Controls = () => {
   
   return (
     <div className='flex flex-col items-center justify-center gap-4'>
         <div className='flex justify-between w-full'>
-            <TakePicture onClick={controlProps.onClick} />
+            <TakePicture  />
             {/* <DroneShooting /> */}
         </div>
         <div>

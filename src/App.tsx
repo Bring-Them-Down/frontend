@@ -7,7 +7,7 @@ import VideoPlayer from "./components/videoPlayer";
 import GalleriModal from "./components/galleriModal";
 import { FollowCursor } from "./components/followCursor";
 import Controls from "./components/controls/controls";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [activeSide, setActiveSide] = useState<"left" | "right" | null>(null);
@@ -56,7 +56,7 @@ function App() {
           {/* Left Column */}
           <div className="flex flex-col items-center justify-center gap-4">
             <div className="flex-1 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
-              <Controls onClick={handleTakePicture} />
+              <Controls />
             </div>
             <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center flex w-[256px]">
 
