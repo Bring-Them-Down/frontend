@@ -27,10 +27,10 @@ function App() {
     <div className="min-h-screen relative">
       {/* Main content area */}
       <div className="min-h-screen flex flex-col items-center justify-center p-4 gap-2">
-        <div>
+        <div className="w-full max-w-6xl">
           {/* Video + overlay container */}
           <div className="flex justify-center items-center">
-            <div className="relative">
+            <div className="relative w-full">
               <VideoPlayer />
               {/* Crosshair */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
