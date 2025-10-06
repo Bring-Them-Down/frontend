@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import LogModal from "./components/logModal";
 import DroneStatus from "./components/droneStatus/droneStatus";
 import AudioVisualiser from "./components/audioVisualiser";
@@ -12,16 +12,6 @@ import { AiThing } from "./components/aiThing";
 
 function App() {
   const [activeSide, setActiveSide] = useState<"left" | "right" | null>(null);
-
-  useEffect(() => {
-    // Mockdata alternates every 2 seconds.
-    // Replace setInterval with real mic data.
-    const interval = setInterval(() => {
-      setActiveSide((prev) => (prev === "left" ? "right" : "left"));
-    }, 500);
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div className="min-h-screen relative">
@@ -64,7 +54,7 @@ function App() {
             {/* Center Column */}
             <div className="flex items-center justify-center">
               <div className="flex-1 min-w-124 p-1 rounded-lg text-center justify-center items-center flex">
-                <AudioVisualiser />
+                <AudioVisualiser setActiveSide={setActiveSide} />
               </div>
             </div>
 

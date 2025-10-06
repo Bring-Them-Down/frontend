@@ -1,11 +1,82 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function AudioVisualiser() {
+export default function AudioVisualiser({
+  setActiveSide,
+}: {
+  setActiveSide: (side: "left" | "right" | null) => void;
+}) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
+  const analyserLRef = useRef<AnalyserNode | null>(null);
+  const analyserRRef = useRef<AnalyserNode | null>(null);
+  const [isListening, setIsListening] = useState(false);
+
+  const initializeAudio = () => {
+    if (audioContextRef.current || !audioRef.current) return;
+
+    const audioContext = new AudioContext();
+    audioContextRef.current = audioContext;
+
+    const source = audioContext.createMediaElementSource(audioRef.current);
+    sourceRef.current = source;
+
+    const splitter = audioContext.createChannelSplitter(2);
+    const analyserL = audioContext.createAnalyser();
+    const analyserR = audioContext.createAnalyser();
+    analyserL.fftSize = 1024;
+    analyserR.fftSize = 1024;
+    analyserLRef.current = analyserL;
+    analyserRRef.current = analyserR;
+
+    const analyser = audioContext.createAnalyser();
+    analyser.fftSize = 256;
+    analyserRef.current = analyser;
+
+    source.connect(splitter);
+    splitter.connect(analyserL, 0);
+    splitter.connect(analyserR, 1);
+
+    source.connect(analyser);
+    analyser.connect(audioContext.destination);
+  };
+
+  useEffect(() => {
+    const dataL = new Float32Array(1024);
+    const dataR = new Float32Array(1024);
+
+    function checkBalance() {
+      const analyserL = analyserLRef.current;
+      const analyserR = analyserRRef.current;
+
+      if (!analyserL || !analyserR) {
+        requestAnimationFrame(checkBalance);
+        return;
+      }
+
+      analyserL.getFloatTimeDomainData(dataL);
+      analyserR.getFloatTimeDomainData(dataR);
+
+      const rmsL = Math.sqrt(
+        dataL.reduce((s, x) => s + x * x, 0) / dataL.length
+      );
+      const rmsR = Math.sqrt(
+        dataR.reduce((s, x) => s + x * x, 0) / dataR.length
+      );
+
+      const diff = rmsL - rmsR;
+
+      if (Math.abs(diff) < 0.02) setActiveSide(null);
+      else if (diff > 0) setActiveSide("left");
+      else setActiveSide("right");
+
+      requestAnimationFrame(checkBalance);
+    }
+
+    checkBalance();
+  }, [setActiveSide]);
 
   const handleStart = async () => {
     const audio = audioRef.current;
@@ -15,17 +86,7 @@ export default function AudioVisualiser() {
       return;
     }
 
-    if (!audioContextRef.current) {
-      audioContextRef.current = new AudioContext();
-      const analyser = audioContextRef.current.createAnalyser();
-      analyser.fftSize = 256;
-      analyserRef.current = analyser;
-
-      const source = audioContextRef.current.createMediaElementSource(audio);
-      sourceRef.current = source;
-      source.connect(analyser);
-      analyser.connect(audioContextRef.current.destination);
-    }
+    initializeAudio();
 
     try {
       await audio.play();
@@ -79,23 +140,6 @@ export default function AudioVisualiser() {
     }
 
     draw();
-
-    const video = document.getElementById("videoPlayer");
-
-    if (!video) return;
-
-    video.addEventListener("play", () => {
-      handleStart();
-    });
-
-    video.addEventListener("pause", () => {
-      audioRef.current!.pause();
-    });
-
-    return () => {
-      video.removeEventListener("play", () => {});
-      video.removeEventListener("pause", () => {});
-    };
   }, [audioRef]);
 
   return (
@@ -107,6 +151,17 @@ export default function AudioVisualiser() {
         style={{ display: "none" }}
       />
       <canvas ref={canvasRef} width={450} height={200} />
+      {!isListening && (
+        <button
+          onClick={() => {
+            setIsListening(true);
+            handleStart();
+          }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-8 py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
+        >
+          Start
+        </button>
+      )}
     </div>
   );
 }
