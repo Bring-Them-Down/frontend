@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import WifiModal from "./components/wifiModal";
 import DroneStatus from "./components/droneStatus/droneStatus";
-import { Toaster, toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import AudioVisualiser from "./components/audioVisualiser";
 import Crosshair from "./assets/Crosshair.svg";
 import VideoPlayer from "./components/videoPlayer";
 import TakePicture from "./components/takeImage/takePicture";
 import GalleriModal from "./components/galleriModal";
+import { FollowCursor } from "./components/followCursor";
 
 function App() {
   const [activeSide, setActiveSide] = useState<"left" | "right" | null>(null);
@@ -20,14 +21,6 @@ function App() {
 
     return () => clearInterval(interval);
   }, []);
-
-  // Toast logic here
-    const handleTakePicture = () => {
-    toast.success("Picture Taken!", {
-      duration: 3000,
-      style: { background: "#333", color: "#fff" },
-    });
-  };
 
   return (
     <div className="min-h-screen relative">
@@ -58,17 +51,10 @@ function App() {
           </div>
         </div>
         {/* Three divs container */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-5xl h-full">
-          {/* Left Column */}
-          <div className="flex flex-col items-center justify-center gap-4">
-            <div className="flex-1 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
-              <DroneStatus status="Enemy" />
-            </div>
-            <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center flex w-[256px]">
-              {/* WiFi button positioned absolutely */}
-              <WifiModal />
-            </div>
-            
+        <div className="flex justify-center items-stretch gap-8 w-full max-w-5xl flex-wrap ">
+          <div className="flex-1 flex-col gap-4 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
+            <DroneStatus status="Enemy" />
+            <WifiModal />
           </div>
 
           {/* Center Column */}
@@ -80,14 +66,14 @@ function App() {
 
           {/* Right Column */}
           <div className="flex flex-col items-center justify-center gap-4">
-            <TakePicture label='Take Picture' onClick={handleTakePicture} />
+            <TakePicture label="Take Picture" />
             <GalleriModal />
           </div>
         </div>
       </div>
       {/* Toaster */}
       <Toaster position="bottom-right" />
-      
+      <FollowCursor />
     </div>
   );
 }
