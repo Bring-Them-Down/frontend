@@ -65,7 +65,7 @@ function App() {
             <div className="flex-1 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
               <Controls onClick={handleTakePicture} />
             </div>
-            <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center flex w-[256px]">
+            <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center w-[256px]">
 
             </div>
             
@@ -80,7 +80,7 @@ function App() {
 
           {/* Right Column */}
           <div className="flex flex-col items-center justify-center gap-4">
-            <DroneStatus status="Enemy" />
+            <DroneStatus status="Friendly" />
             {/* WiFi button positioned absolutely */}
             <WifiModal />
             <GalleriModal />

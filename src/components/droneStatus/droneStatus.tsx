@@ -24,16 +24,17 @@ const DroneStatus = ({ status }: { status: DroneStatusType }) => {
   // Shared color styles
   const colorClasses =
     currentStatus === "Friendly"
-      ? "text-white bg-green-500"
+      ? "text-white bg-green-500/35"
       : currentStatus === "Enemy"
-      ? "text-white bg-red-500 animate-pulse [animation-duration:0.45s]"
+      ? "text-white bg-red-500/35 animate-pulse [animation-duration:0.45s]"
       : currentStatus === "Unknown"
-      ? "text-white bg-yellow-500"
-      : "text-white bg-gray-500 pointer-events-none";
+      ? "text-white bg-yellow-500/35"
+      : "text-white bg-gray-500/35 pointer-events-none";
 
   return (
     <div
-      className={`relative flex items-center justify-center font-['Special_Elite'] rounded-full w-24 h-24 cursor-pointer overflow-visible ${colorClasses}`}
+    //   className={`relative flex items-center justify-center font-['Special_Elite'] rounded-full w-24 h-24 cursor-pointer overflow-visible ${colorClasses}`}
+      className={`relative flex items-center justify-center font-['Special_Elite'] border-white border-2 rounded-lg min-w-[204px] min-h-[68px] cursor-pointer overflow-visible ${colorClasses}`}
 
     >
        <span className="p-2">{status}</span> 
