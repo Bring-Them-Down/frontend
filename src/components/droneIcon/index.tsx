@@ -2,8 +2,8 @@ export function DroneIcon() {
   return (
     <svg
       fill="#ffffff"
-      height="200px"
-      width="200px"
+      height="12.5rem"
+      width="12.5rem"
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"

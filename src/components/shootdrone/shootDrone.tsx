@@ -26,9 +26,9 @@ const ShootDrone: React.FC = () => {
     <button
       onClick={handleShootDrone}
       className='relative flex items-center justify-center font-["Special_Elite"] 
-                 text-white text-xl rounded-lg p-4 cursor-pointer border-2 hover:bg-stone-950/35'
+                 text-white text-xl rounded-lg p-2 cursor-pointer border-2 hover:bg-stone-950/35'
     >
-      <Shoot color="#fff" size={40} />
+      <Shoot color="#fff" size={30} />
     </button>
   );
 };

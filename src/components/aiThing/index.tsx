@@ -133,7 +133,7 @@ export function AiThing() {
               ✕
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-[200px] max-h-[250px]">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-[12.5rem] max-h-[15.625rem]">
             {aiResponses.length === 0 && !isLoading ? (
               <div className="text-sm text-gray-500 text-center py-8">
                 <p>Hey! I'm here to help you with your drone questions!</p>
