@@ -74,7 +74,7 @@ const Controls = () => {
             <Drone 
               size={80} 
               color='#FFF' 
-              className='z-100 transition-transform duration-200' 
+              className='z-100 transition-transform duration-200 absolute top-50 left-25'
               style={{
                 transform: `translate(${dronePosition.x}px, ${dronePosition.y}px)`
               }}
