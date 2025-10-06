@@ -5,6 +5,7 @@ import AudioVisualiser from "./components/audioVisualiser";
 import Crosshair from "./assets/Crosshair.svg";
 import VideoPlayer from "./components/videoPlayer";
 import GalleriModal from "./components/galleriModal";
+import { FollowCursor } from "./components/followCursor";
 import Controls from "./components/controls/controls";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -20,14 +21,6 @@ function App() {
 
     return () => clearInterval(interval);
   }, []);
-
-    // Toast logic here
-    const handleTakePicture = () => {
-    toast.success("Picture Taken!", {
-      duration: 3000,
-      style: { background: "#333", color: "#fff" },
-    });
-  };
 
   return (
     <div className="min-h-screen relative">
@@ -90,7 +83,7 @@ function App() {
     </div>
         {/* Toaster */}
       <Toaster position="bottom-right" />
-      
+      <FollowCursor />
     </div>
   );
 }
