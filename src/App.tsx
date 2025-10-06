@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import WifiModal from "./components/wifiModal";
 import DroneStatus from "./components/droneStatus/droneStatus";
-import { Toaster } from "react-hot-toast";
 import AudioVisualiser from "./components/audioVisualiser";
 import Crosshair from "./assets/Crosshair.svg";
 import VideoPlayer from "./components/videoPlayer";
-import TakePicture from "./components/takeImage/takePicture";
 import GalleriModal from "./components/galleriModal";
 import { FollowCursor } from "./components/followCursor";
+import Controls from "./components/controls/controls";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [activeSide, setActiveSide] = useState<"left" | "right" | null>(null);
@@ -25,13 +25,12 @@ function App() {
   return (
     <div className="min-h-screen relative">
       {/* Main content area */}
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 gap-12">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 gap-2">
         <div>
           {/* Video + overlay container */}
           <div className="flex justify-center items-center">
             <div className="relative">
               <VideoPlayer />
-
               {/* Crosshair */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <img
@@ -51,10 +50,18 @@ function App() {
           </div>
         </div>
         {/* Three divs container */}
-        <div className="flex justify-center items-stretch gap-8 w-full max-w-5xl flex-wrap ">
-          <div className="flex-1 flex-col gap-4 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
-            <DroneStatus status="Enemy" />
-            <WifiModal />
+        <div >
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-5xl h-full">
+
+          {/* Left Column */}
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="flex-1 p-1 rounded-lg text-center justify-center flex w-[256px] items-center">
+              <Controls />
+            </div>
+            <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center w-[256px]">
+
+            </div>
+            
           </div>
 
           {/* Center Column */}
@@ -66,12 +73,22 @@ function App() {
 
           {/* Right Column */}
           <div className="flex flex-col items-center justify-center gap-4">
-            <TakePicture label="Take Picture" />
+            <DroneStatus status="Friendly" />
+            {/* WiFi button positioned absolutely */}
+            <WifiModal />
             <GalleriModal />
+            <div>
+              <button
+                className='relative flex items-center justify-center font-["Special_Elite"] text-white text-xl rounded-lg p-4 cursor-pointer min-w-[204px] min-h-[68px] border-2 hover:bg-stone-950/35'
+              >
+                <span className="pt-1.5">Logs</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      {/* Toaster */}
+    </div>
+        {/* Toaster */}
       <Toaster position="bottom-right" />
       <FollowCursor />
     </div>

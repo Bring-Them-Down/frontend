@@ -10,36 +10,35 @@ const DroneStatus = ({ status }: { status: DroneStatusType }) => {
   }, [status]);
 
   // Hook to change text on hover
-  const useHoverText = (initialText: string, hoverText: string) => {
-    const [isHovered, setIsHovered] = useState(false);
+//   const useHoverText = (initialText: string, hoverText: string) => {
+//     const [isHovered, setIsHovered] = useState(false);
 
-    return {
-      text: isHovered ? hoverText : initialText,
-      onMouseEnter: () => setIsHovered(true),
-      onMouseLeave: () => setIsHovered(false),
-    };
-  };
+//     return {
+//       text: isHovered ? hoverText : initialText,
+//       onMouseEnter: () => setIsHovered(true),
+//       onMouseLeave: () => setIsHovered(false),
+//     };
+//   };
 
-  const hoverProps = useHoverText(currentStatus, "Fire!");
 
   // Shared color styles
   const colorClasses =
     currentStatus === "Friendly"
-      ? "text-green-500 hover:text-white hover:bg-green-500"
+      ? "text-white bg-green-500/35"
       : currentStatus === "Enemy"
-      ? "text-red-500 hover:text-white hover:bg-red-500"
+      ? "text-white bg-red-500/35 animate-pulse [animation-duration:0.45s]"
       : currentStatus === "Unknown"
-      ? "text-yellow-500 hover:text-white hover:bg-yellow-500"
-      : "text-gray-500 pointer-events-none";
+      ? "text-white bg-yellow-500/35"
+      : "text-white bg-gray-500/35 pointer-events-none";
 
   return (
-    <button
-      className={`relative flex items-center justify-center border-2 border-dashed font-['Special_Elite'] text-xl rounded-lg p-3 cursor-pointer min-w-[204px] min-h-[68px] overflow-visible hover:animate-pulse hover:[animation-duration:0.45s] ${colorClasses}`}
-      onMouseEnter={hoverProps.onMouseEnter}
-      onMouseLeave={hoverProps.onMouseLeave}
+    <div
+    //   className={`relative flex items-center justify-center font-['Special_Elite'] rounded-full w-24 h-24 cursor-pointer overflow-visible ${colorClasses}`}
+      className={`relative flex items-center justify-center font-['Special_Elite'] border-white border-2 rounded-lg min-w-[204px] min-h-[68px] cursor-pointer overflow-visible ${colorClasses}`}
+
     >
-       <span className="pt-1.5">{hoverProps.text}</span> 
-    </button>
+       <span className="p-2">{status}</span> 
+    </div>
   );
 };
 
