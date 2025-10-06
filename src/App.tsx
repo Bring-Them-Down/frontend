@@ -70,7 +70,7 @@ function App() {
 
             {/* Right Column */}
             <div className="flex flex-col items-center justify-center gap-8">
-              <DroneStatus status="Friendly" />
+              <DroneStatus status="Enemy" />
               {/* WiFi button positioned absolutely */}
               <LogModal />
               <GalleriModal />
