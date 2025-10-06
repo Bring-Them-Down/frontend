@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function AudioVisualiser() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -6,7 +6,6 @@ export default function AudioVisualiser() {
   const audioContextRef = useRef<AudioContext | null>(null);
   const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
-  const [isStarted, setIsStarted] = useState(false);
 
   const handleStart = async () => {
     const audio = audioRef.current;
@@ -28,17 +27,11 @@ export default function AudioVisualiser() {
       analyser.connect(audioContextRef.current.destination);
     }
 
-    if (audioContextRef.current.state === "suspended") {
-      await audioContextRef.current.resume();
-    }
-
     try {
       await audio.play();
     } catch (err) {
       console.error("audio play error:", err);
     }
-
-    setIsStarted(true);
   };
 
   useEffect(() => {
@@ -72,6 +65,7 @@ export default function AudioVisualiser() {
         const barHeight =
           dataArray[i] > 100 ? dataArray[i] * 0.7 : dataArray[i] * 1.2;
         const halfBarHeight = barHeight / 2;
+
         ctx.fillStyle = `rgb(${barHeight + 100}, 140, 0)`;
 
         const xRight = centerX + i * (barWidth + 1);
@@ -85,6 +79,23 @@ export default function AudioVisualiser() {
     }
 
     draw();
+
+    const video = document.getElementById("videoPlayer");
+
+    if (!video) return;
+
+    video.addEventListener("play", () => {
+      handleStart();
+    });
+
+    video.addEventListener("pause", () => {
+      audioRef.current!.pause();
+    });
+
+    return () => {
+      video.removeEventListener("play", () => {});
+      video.removeEventListener("pause", () => {});
+    };
   }, [audioRef]);
 
   return (
@@ -96,14 +107,6 @@ export default function AudioVisualiser() {
         style={{ display: "none" }}
       />
       <canvas ref={canvasRef} width={450} height={200} />
-      {!isStarted && (
-        <button
-          onClick={handleStart}
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-teal-500 px-4 py-2 text-xl rounded-md hover:bg-opacity-90 border-1 border-teal-500 w-[194px] h-[64px] hover:bg-teal-500 hover:text-white hover:cursor-pointer "
-        >
-          Start Visualizer
-        </button>
-      )}
     </div>
   );
 }
