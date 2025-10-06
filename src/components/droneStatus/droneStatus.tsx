@@ -33,11 +33,10 @@ const DroneStatus = ({ status }: { status: DroneStatusType }) => {
 
   return (
     <div
-    //   className={`relative flex items-center justify-center font-['Special_Elite'] rounded-full w-24 h-24 cursor-pointer overflow-visible ${colorClasses}`}
       className={`relative flex items-center justify-center font-['Special_Elite'] border-white border-2 rounded-lg min-w-[204px] min-h-[68px] cursor-pointer overflow-visible ${colorClasses}`}
 
     >
-       <span className="p-2">{status}</span> 
+       <span className="p-2 pt-3">{status}</span> 
     </div>
   );
 };
