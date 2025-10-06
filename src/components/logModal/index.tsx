@@ -50,9 +50,9 @@ export default function LogModal() {
       <button
         title="Logs"
         onClick={() => setIsOpen(true)}
-        className="flex flex-row text-xl text-white items-center gap-2 cursor-pointer hover:bg-stone-950/35 p-3 font-['Special_Elite'] rounded-md border border-gray-200 min-w-[204px] min-h-[68px] justify-center"
+        className="flex flex-row text-white items-center gap-2 cursor-pointer hover:bg-stone-950/35 font-['Special_Elite'] rounded-md border border-gray-200 min-w-[10rem] min-h-[3rem] justify-center"
       >
-        <span className="pt-1.5">Logs</span>
+        <span className="p-2 pt-3">Logs</span>
       </button>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         {loading ? (
@@ -66,7 +66,7 @@ export default function LogModal() {
               <span className="w-12">ID</span>
               <span className="w-12 text-left">Time</span>
               <span className="flex-1 px-3">Name</span>
-              <span className="min-w-[90px] text-right">Stance</span>
+              <span className="min-w-[5.625rem] text-right">Stance</span>
             </div>
             <div className="flex-1 overflow-y-auto divide-y">
               {items.map((item) => (
@@ -85,7 +85,7 @@ export default function LogModal() {
                   <p className="flex-1 px-3 font-medium text-gray-800 truncate">
                     {item.name}
                   </p>
-                  <p className="flex flex-row items-center gap-2 min-w-[90px] justify-end">
+                  <p className="flex flex-row items-center gap-2 min-w-[5.625rem] justify-end">
                     <span className="text-sm text-gray-700">{item.stance}</span>
                     <span
                       className={`w-3 h-3 rounded-full border ${getStanceClasses(
