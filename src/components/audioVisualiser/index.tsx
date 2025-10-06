@@ -64,15 +64,23 @@ export default function AudioVisualiser() {
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const barWidth = (canvas.width / bufferLength) * 2.5;
-      let x = 0;
+      const barWidth = (canvas.width / bufferLength) * 2;
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
 
       for (let i = 0; i < bufferLength; i++) {
         const barHeight =
           dataArray[i] > 100 ? dataArray[i] * 0.7 : dataArray[i] * 1.2;
+        const halfBarHeight = barHeight / 2;
         ctx.fillStyle = `rgb(${barHeight + 100}, 140, 0)`;
-        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-        x += barWidth + 1;
+
+        const xRight = centerX + i * (barWidth + 1);
+        ctx.fillRect(xRight, centerY - halfBarHeight, barWidth, halfBarHeight);
+        ctx.fillRect(xRight, centerY, barWidth, halfBarHeight);
+
+        const xLeft = centerX - i * (barWidth + 1) - barWidth;
+        ctx.fillRect(xLeft, centerY - halfBarHeight, barWidth, halfBarHeight);
+        ctx.fillRect(xLeft, centerY, barWidth, halfBarHeight);
       }
     }
 
