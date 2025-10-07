@@ -37,7 +37,7 @@ export function Radar() {
   const centerY = 120;
 
   const angleToCoords = (angle: number, r: number) => {
-    const radians = ((angle + 90) * Math.PI) / 180;
+    const radians = ((-angle + 90) * Math.PI) / 180;
     return {
       x: centerX + r * Math.cos(radians),
       y: centerY - r * Math.sin(radians),
@@ -45,10 +45,10 @@ export function Radar() {
   };
 
   const angleToMarkerCoords = (angle: number, r: number) => {
-    const radians = (angle * Math.PI) / 180;
+    const radians = ((-angle + 90) * Math.PI) / 180;
     return {
-      x: centerX + r * Math.sin(radians),
-      y: centerY + r * Math.cos(radians),
+      x: centerX + r * Math.cos(radians),
+      y: centerY - r * Math.sin(radians),
     };
   };
 
@@ -206,15 +206,16 @@ export function Radar() {
 
         {[-90, -75, -60, -45, -30, -15, 0, 15, 30, 45, 60, 75, 90].map(
           (angle) => {
-            const coords = angleToMarkerCoords(angle, radius + 15);
+            const coords = angleToMarkerCoords(angle, radius + 12);
             return (
               <text
                 key={angle}
                 x={coords.x}
                 y={coords.y}
                 fill="#00ff00"
-                fontSize="10"
+                fontSize="9"
                 textAnchor="middle"
+                dominantBaseline="middle"
                 fontFamily="monospace"
               >
                 {angle}°

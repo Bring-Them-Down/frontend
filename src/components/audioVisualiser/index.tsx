@@ -1,22 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function AudioVisualiser() {
-  const audioRef = useRef<HTMLAudioElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
-  const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
+  const sourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const analyserLRef = useRef<AnalyserNode | null>(null);
   const analyserRRef = useRef<AnalyserNode | null>(null);
-  const [isListening, setIsListening] = useState(false);
 
-  const initializeAudio = () => {
-    if (audioContextRef.current || !audioRef.current) return;
+  const initializeAudio = (mediaStream: MediaStream) => {
+    if (audioContextRef.current) return;
 
     const audioContext = new AudioContext();
     audioContextRef.current = audioContext;
 
-    const source = audioContext.createMediaElementSource(audioRef.current);
+    const source = audioContext.createMediaStreamSource(mediaStream);
     sourceRef.current = source;
 
     const splitter = audioContext.createChannelSplitter(2);
@@ -36,24 +34,15 @@ export default function AudioVisualiser() {
     splitter.connect(analyserR, 1);
 
     source.connect(analyser);
-    analyser.connect(audioContext.destination);
   };
 
-  const handleStart = async () => {
-    const audio = audioRef.current;
-
-    if (!audio) {
-      console.error("Audio element not found");
+  const handleStart = (mediaStream: MediaStream) => {
+    if (!mediaStream) {
+      console.error("MediaStream not found");
       return;
     }
 
-    initializeAudio();
-
-    try {
-      await audio.play();
-    } catch (err) {
-      console.error("audio play error:", err);
-    }
+    initializeAudio(mediaStream);
   };
 
   useEffect(() => {
@@ -101,28 +90,40 @@ export default function AudioVisualiser() {
     }
 
     draw();
-  }, [audioRef]);
+
+    const video = document.getElementById("videoPlayer") as HTMLVideoElement;
+
+    if (!video) return;
+
+    video.onplay = () => {
+      if (video.srcObject && video.srcObject instanceof MediaStream) {
+        handleStart(video.srcObject);
+      }
+    };
+
+    video.onpause = () => {
+      if (
+        audioContextRef.current &&
+        audioContextRef.current.state === "running"
+      ) {
+        audioContextRef.current.suspend();
+      }
+    };
+
+    video.onloadedmetadata = () => {
+      if (
+        video.srcObject &&
+        video.srcObject instanceof MediaStream &&
+        !video.paused
+      ) {
+        handleStart(video.srcObject);
+      }
+    };
+  }, []);
 
   return (
     <div style={{ position: "relative" }}>
-      <audio
-        ref={audioRef}
-        src="/src/components/audioVisualiser/test.mp3"
-        loop
-        style={{ display: "none" }}
-      />
       <canvas ref={canvasRef} width={450} height={200} />
-      {!isListening && (
-        <button
-          onClick={() => {
-            setIsListening(true);
-            handleStart();
-          }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-8 py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 hover:scale-105 active:scale-95"
-        >
-          Start
-        </button>
-      )}
     </div>
   );
 }
