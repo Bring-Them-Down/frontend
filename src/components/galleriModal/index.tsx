@@ -50,7 +50,7 @@ export default function GalleriModal() {
       <button
         onClick={() => setIsOpen(true)}
         className='relative flex items-center justify-center font-["Special_Elite"] 
-                 text-white rounded-lg cursor-pointer min-w-[10rem] min-h-[3rem] border-2 hover:bg-stone-950/35'
+                 text-white rounded-lg cursor-pointer min-w-[6rem] min-h-[3rem] border-2 hover:bg-stone-950/35'
     >
         <span className="p-2 pt-3">Gallery</span>
       </button>

@@ -9,9 +9,15 @@ import Drone from './drone';
 
 const Controls = () => {
   const [dronePosition, setDronePosition] = useState({ x: 0, y: 0 });
+  const [pressedKeys, setPressedKeys] = useState({
+    up: false,
+    down: false,
+    left: false,
+    right: false
+  });
 
   const moveDrone = (direction: string) => {
-    const MOVE_DISTANCE = 1.25; // 1.25rem equivalent
+    const MOVE_DISTANCE = 1.25;
     
     switch(direction) {
       case 'up':
@@ -30,44 +36,101 @@ const Controls = () => {
   };
 
   useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       switch(event.key) {
         case 'ArrowUp':
           moveDrone('up');
+          setPressedKeys(prev => ({ ...prev, up: true }));
           break;
         case 'ArrowDown':
           moveDrone('down');
+          setPressedKeys(prev => ({ ...prev, down: true }));
           break;
         case 'ArrowLeft':
           moveDrone('left');
+          setPressedKeys(prev => ({ ...prev, left: true }));
           break;
         case 'ArrowRight':
           moveDrone('right');
+          setPressedKeys(prev => ({ ...prev, right: true }));
           break;
       }
     };
 
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    const handleKeyUp = (event: KeyboardEvent) => {
+      switch(event.key) {
+        case 'ArrowUp':
+          setPressedKeys(prev => ({ ...prev, up: false }));
+          break;
+        case 'ArrowDown':
+          setPressedKeys(prev => ({ ...prev, down: false }));
+          break;
+        case 'ArrowLeft':
+          setPressedKeys(prev => ({ ...prev, left: false }));
+          break;
+        case 'ArrowRight':
+          setPressedKeys(prev => ({ ...prev, right: false }));
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
   }, []);
   
   return (
-    <div className='flex flex-col items-center justify-center w-[12rem]'>
+    <div className='flex flex-col items-center justify-center w-[10rem]'>
         <div className='flex justify-between w-full'>
             <TakePicture />
             <ShootDrone />
         </div>
         <div >
             <div className='flex items-center justify-center cursor-pointer'>
-            <div className='hover:scale-120 transition-transform duration-200'><ArrowUp onClick={() => moveDrone('up')} size={40} color='#FFF' hoverColor='#6b7280'/></div>
+            <div className={`hover:scale-120 transition-transform duration-200 ${pressedKeys.up ? 'scale-120' : ''}`}>
+              <ArrowUp 
+                onClick={() => moveDrone('up')} 
+                size={40} 
+                color='#FFF' 
+                hoverColor='#f97316'
+                className={pressedKeys.up ? '[&>path]:fill-orange-500' : ''}
+              />
+            </div>
             </div>
             <div className='flex cursor-pointer justify-center items-center'>
-            <div className='hover:scale-120 transition-transform duration-200'><ArrowLeft onClick={() => moveDrone('left')} size={40} color='#FFF' hoverColor='#6b7280'/></div>
-            <button className='flex items-center justify-center font-[Special_Elite] p-2 pt-3 text-white border-2 rounded-lg border-white min-h-[3rem] cursor-pointer hover:bg-stone-950/35'>Auto</button>
-            <div className='hover:scale-120 transition-transform duration-200'><ArrowRight onClick={() => moveDrone('right')} size={40} color='#FFF' hoverColor='#6b7280'/></div>
+            <div className={`hover:scale-120 transition-transform duration-200 ${pressedKeys.left ? 'scale-120' : ''}`}>
+              <ArrowLeft 
+                onClick={() => moveDrone('left')} 
+                size={40} 
+                color='#FFF' 
+                hoverColor='#f97316'
+                className={pressedKeys.left ? '[&>path]:fill-orange-500' : ''}
+              />
+            </div>
+            <button className='flex items-center justify-center font-[Special_Elite] p-2 pt-3 text-white border-2 rounded-lg border-white min-h-[3rem] cursor-pointer hover:bg-orange-500/55'>Auto</button>
+            <div className={`hover:scale-120 transition-transform duration-200 ${pressedKeys.right ? 'scale-120' : ''}`}>
+              <ArrowRight 
+                onClick={() => moveDrone('right')} 
+                size={40} 
+                color='#FFF' 
+                hoverColor='#f97316'
+                className={pressedKeys.right ? '[&>path]:fill-orange-500' : ''}
+              />
+            </div>
             </div>
             <div className='flex items-center justify-center cursor-pointer'>
-            <div className='hover:scale-120 transition-transform duration-200'><ArrowDown onClick={() => moveDrone('down')} size={40} color='#FFF' hoverColor='#6b7280'/></div>
+            <div className={`hover:scale-120 transition-transform duration-200 ${pressedKeys.down ? 'scale-120' : ''}`}>
+              <ArrowDown 
+                onClick={() => moveDrone('down')} 
+                size={40} 
+                color='#FFF' 
+                hoverColor='#f97316'
+                className={pressedKeys.down ? '[&>path]:fill-orange-500' : ''}
+              />
+            </div>
             </div>
         </div>
         <div>
