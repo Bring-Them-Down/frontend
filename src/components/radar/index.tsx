@@ -62,7 +62,8 @@ export function Radar() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: "20px",
+        padding: "14px",
+        marginTop: "6px",
         backgroundColor: "#0a0a0a",
         borderRadius: "10px",
         border: "2px solid #00ff00",
@@ -71,7 +72,7 @@ export function Radar() {
       <div
         style={{
           color: "#00ff00",
-          marginBottom: "10px",
+          marginBottom: "6px",
           fontFamily: "monospace",
         }}
       >
@@ -224,17 +225,6 @@ export function Radar() {
           }
         )}
       </svg>
-
-      <div
-        style={{
-          color: "#ff0000",
-          marginTop: "10px",
-          fontFamily: "monospace",
-          fontSize: "12px",
-        }}
-      >
-        TARGET DETECTED
-      </div>
     </div>
   );
 }

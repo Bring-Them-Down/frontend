@@ -84,7 +84,7 @@ const Controls = () => {
   
   return (
     <div className='flex flex-col items-center justify-center w-[10rem]'>
-        <div className='flex justify-between w-full'>
+        <div className='flex justify-between w-full mb-4'>
             <TakePicture />
             <ShootDrone />
         </div>
