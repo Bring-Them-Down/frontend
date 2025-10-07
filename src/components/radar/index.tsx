@@ -76,7 +76,7 @@ export function Radar() {
           fontFamily: "monospace",
         }}
       >
-        RADAR - PING: {Math.round(pingAngle)}°
+        Accosutic - PING: {Math.round(pingAngle)}°
       </div>
 
       <svg
