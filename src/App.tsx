@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import LogModal from "./components/logModal";
 import DroneStatus from "./components/droneStatus/droneStatus";
@@ -17,7 +16,6 @@ function App() {
       <div className="min-h-screen flex flex-col items-center justify-center p-4 gap-2">
         <div className="w-full max-w-6xl">
           <div className="flex items-center gap-4">
-            <div className="flex flex-col gap-4 flex-shrink-0"></div>
             <div className="relative flex-1 flex justify-center">
               <div className="relative max-w-4xl w-full">
                 <VideoPlayer />
@@ -33,26 +31,24 @@ function App() {
           </div>
         </div>
         <div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-6xl h-full">
-            <div className="flex flex-col items-center justify-center gap-4">
-              <div className="flex-1 mt-8 rounded-lg text-center justify-center flex w-[12.8rem] items-center gap-2">
-                <div className="flex flex-col gap-2">
-                  <DroneStatus status="Enemy" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl h-full">
+            <div className="flex items-center justify-center">
+              <div className="flex flex-col w-[8rem] items-center justify-center gap-4">
+                  <DroneStatus status="No Signal" />
                   <LogModal />
                   <GalleriModal />
-                </div>
+              </div>
+              <div className="flex-1 text-center justify-center flex items-center gap-2">
                 <Controls />
               </div>
-              <div className="flex-1 p-1 rounded-lg text-center flex items-center justify-center w-[12.8rem]"></div>
             </div>
             <div className="flex items-center justify-center">
-              <div className="flex-1 min-w-124 p-1 rounded-lg text-center justify-center items-center flex">
+              <div className="flex-1 min-w-124 p-1 text-center justify-center items-center flex">
                 <AudioVisualiser />
               </div>
             </div>
             <div className="flex flex-col items-center justify-center gap-2">
               <Radar />
-              <AiThing />
             </div>
           </div>
         </div>

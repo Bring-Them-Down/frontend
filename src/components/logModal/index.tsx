@@ -50,7 +50,7 @@ export default function LogModal() {
       <button
         title="Logs"
         onClick={() => setIsOpen(true)}
-        className="flex flex-row text-white items-center gap-2 cursor-pointer hover:bg-stone-950/35 font-['Special_Elite'] rounded-md border border-gray-200 min-w-[10rem] min-h-[3rem] justify-center"
+        className="flex flex-row text-white items-center gap-2 cursor-pointer hover:bg-stone-950/35 font-['Special_Elite'] rounded-md border-2 border-gray-200 min-w-[6rem] min-h-[3rem] justify-center"
       >
         <span className="p-2 pt-3">Logs</span>
       </button>
