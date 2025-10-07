@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function AudioVisualiser({
-  setActiveSide,
-}: {
-  setActiveSide: (side: "left" | "right" | null) => void;
-}) {
+export default function AudioVisualiser() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -42,41 +38,6 @@ export default function AudioVisualiser({
     source.connect(analyser);
     analyser.connect(audioContext.destination);
   };
-
-  useEffect(() => {
-    const dataL = new Float32Array(1024);
-    const dataR = new Float32Array(1024);
-
-    function checkBalance() {
-      const analyserL = analyserLRef.current;
-      const analyserR = analyserRRef.current;
-
-      if (!analyserL || !analyserR) {
-        requestAnimationFrame(checkBalance);
-        return;
-      }
-
-      analyserL.getFloatTimeDomainData(dataL);
-      analyserR.getFloatTimeDomainData(dataR);
-
-      const rmsL = Math.sqrt(
-        dataL.reduce((s, x) => s + x * x, 0) / dataL.length
-      );
-      const rmsR = Math.sqrt(
-        dataR.reduce((s, x) => s + x * x, 0) / dataR.length
-      );
-
-      const diff = rmsL - rmsR;
-
-      if (Math.abs(diff) < 0.02) setActiveSide(null);
-      else if (diff > 0) setActiveSide("left");
-      else setActiveSide("right");
-
-      requestAnimationFrame(checkBalance);
-    }
-
-    checkBalance();
-  }, [setActiveSide]);
 
   const handleStart = async () => {
     const audio = audioRef.current;
