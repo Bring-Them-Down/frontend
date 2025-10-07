@@ -51,7 +51,11 @@ function App() {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center gap-2">
-              <Radar />
+              <DroneStatus status="No Signal" />
+              {/* WiFi button positioned absolutely */}
+              <LogModal />
+              <GalleriModal />
+              <AiThing />
             </div>
           </div>
         </div>

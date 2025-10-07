@@ -9,6 +9,8 @@ import Drone from './drone';
 
 const Controls = () => {
   const [dronePosition, setDronePosition] = useState({ x: 0, y: 0 });
+  
+  const [activeDirection, setActiveDirection] = useState<string | null>(null);
 
   const moveDrone = (direction: string) => {
     const MOVE_DISTANCE = 1.25; // 1.25rem equivalent
@@ -59,15 +61,15 @@ const Controls = () => {
         </div>
         <div >
             <div className='flex items-center justify-center cursor-pointer'>
-            <div className='hover:scale-120 transition-transform duration-200'><ArrowUp onClick={() => moveDrone('up')} size={40} color='#FFF' hoverColor='#6b7280'/></div>
+            <div className='hover:scale-120 transition-transform duration-200'><ArrowUp onClick={() => moveDrone('up')} size={40} color='#FFF' hoverColor='#f97316'/></div>
             </div>
             <div className='flex cursor-pointer justify-center items-center'>
-            <div className='hover:scale-120 transition-transform duration-200'><ArrowLeft onClick={() => moveDrone('left')} size={40} color='#FFF' hoverColor='#6b7280'/></div>
-            <button className='flex items-center justify-center font-[Special_Elite] p-2 pt-3 text-white border-2 rounded-lg border-white min-h-[3rem] cursor-pointer hover:bg-stone-950/35'>Auto</button>
-            <div className='hover:scale-120 transition-transform duration-200'><ArrowRight onClick={() => moveDrone('right')} size={40} color='#FFF' hoverColor='#6b7280'/></div>
+            <div className='hover:scale-120 transition-transform duration-200'><ArrowLeft onClick={() => moveDrone('left')} size={40} color='#FFF' hoverColor='#f97316'/></div>
+            <button className='flex items-center justify-center font-[Special_Elite] p-2 pt-3 text-white border-2 rounded-lg border-white min-h-[3rem] cursor-pointer hover:bg-orange-500'>Auto</button>
+            <div className='hover:scale-120 transition-transform duration-200'><ArrowRight onClick={() => moveDrone('right')} size={40} color='#FFF' hoverColor='#f97316'/></div>
             </div>
             <div className='flex items-center justify-center cursor-pointer'>
-            <div className='hover:scale-120 transition-transform duration-200'><ArrowDown onClick={() => moveDrone('down')} size={40} color='#FFF' hoverColor='#6b7280'/></div>
+            <div className='hover:scale-120 transition-transform duration-200'><ArrowDown onClick={() => moveDrone('down')} size={40} color='#FFF' hoverColor='#f97316'/></div>
             </div>
         </div>
         <div>
