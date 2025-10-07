@@ -25,7 +25,7 @@ const VideoPlayer = () => {
         await pc.setLocalDescription(offer);
 
         const response = await fetch(
-          "https://192.168.0.204:8889/mystream/whep",
+          "http://192.168.0.238:8889/mystream/whep",
           {
             method: "POST",
             headers: {
@@ -44,7 +44,7 @@ const VideoPlayer = () => {
           type: "answer",
           sdp: answerSdp,
         });
-      } catch (error) {}
+      } catch (_) { return; }
     };
 
     connectWebRTC();
