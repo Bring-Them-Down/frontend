@@ -26,7 +26,7 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl h-full">
             <div className="flex items-center justify-center">
               <div className="flex flex-col w-[8rem] items-center justify-center gap-4">
-                <DroneStatus status="No Signal" />
+                <DroneStatus status="NoSignal" />
                 <LogModal />
                 <GalleriModal />
               </div>

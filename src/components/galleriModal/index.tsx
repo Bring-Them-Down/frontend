@@ -2,34 +2,19 @@ import { Modal } from "../modal";
 import { useEffect, useState } from "react";
 
 type Image = {
-  id: string;
-  name: string;
-  url: string;
+  Id: string;
+  FileName: string;
+  ContentType: string;
+  Data: string;
 };
-
-const images: Image[] = [
-  {
-    id: "1",
-    name: "Image 1",
-    url: "https://morfars.dk/cdn/shop/files/DJI-Mini-5-PRO-_-_30_22_-20250617.jpg?v=1758889541&width=2000",
-  },
-  {
-    id: "2",
-    name: "Image 2",
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdt1o0TgtfhOm_T39k6P4FzeZz4TSIB5vKOA&s",
-  },
-  {
-    id: "3",
-    name: "Image 3",
-    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdt1o0TgtfhOm_T39k6P4FzeZz4TSIB5vKOA&s",
-  },
-];
 
 export default function GalleriModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState<Image[]>([]);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     setSelectedImages([]);
@@ -38,12 +23,89 @@ export default function GalleriModal() {
   useEffect(() => {
     if (!isOpen) return;
 
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setItems(images);
-    }, 2000);
+    const fetchImages = async () => {
+      setLoading(true);
+      setError(null);
+      
+      try {
+        const response = await fetch('https://localhost:7078/image');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        setItems(data);
+      } catch (err) {
+        console.error('Error fetching images:', err);
+        setError(err instanceof Error ? err.message : 'Failed to fetch images');
+        setItems([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchImages();
   }, [isOpen]);
+
+  const deleteSelectedImages = async () => {
+    if (selectedImages.length === 0) return;
+    
+    setDeleting(true);
+    const failedDeletes: string[] = [];
+    
+    try {
+      // Delete each selected image
+      const deletePromises = selectedImages.map(async (imageId) => {
+        try {
+          const response = await fetch(`https://localhost:7078/image/${imageId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          });
+          
+          if (!response.ok) {
+            throw new Error(`Failed to delete image ${imageId}: ${response.status}`);
+          }
+          
+          return imageId;
+        } catch (error) {
+          console.error(`Error deleting image ${imageId}:`, error);
+          failedDeletes.push(imageId);
+          return null;
+        }
+      });
+      
+      const results = await Promise.all(deletePromises);
+      const successfulDeletes = results.filter(id => id !== null) as string[];
+      
+      // Update local state to remove successfully deleted images
+      setItems(prevItems => 
+        prevItems.filter(item => !successfulDeletes.includes(item.Id))
+      );
+      
+      // Clear selection of successfully deleted images
+      setSelectedImages(prevSelected => 
+        prevSelected.filter(id => !successfulDeletes.includes(id))
+      );
+      
+      // Show success/error messages
+      if (successfulDeletes.length > 0) {
+        console.log(`Successfully deleted ${successfulDeletes.length} image(s)`);
+      }
+      
+      if (failedDeletes.length > 0) {
+        setError(`Failed to delete ${failedDeletes.length} image(s)`);
+      }
+      
+    } catch (error) {
+      console.error('Error during bulk delete:', error);
+      setError('Failed to delete images');
+    } finally {
+      setDeleting(false);
+    }
+  };
 
   return (
     <>
@@ -62,7 +124,41 @@ export default function GalleriModal() {
         {loading ? (
           <div className="p-2.5 w-full h-[90%] flex items-center justify-center flex-col gap-3">
             <span className="inline-block w-12 h-12 rounded-full border-4 border-gray-300 border-b-transparent animate-spin"></span>
-            <p className="text-gray-700">Loading devices...</p>
+            <p className="text-gray-700">Loading images...</p>
+          </div>
+        ) : error ? (
+          <div className="p-2.5 w-full h-[90%] flex items-center justify-center flex-col gap-3">
+            <p className="text-red-600">Error: {error}</p>
+            <button
+              onClick={() => {
+                setError(null);
+                const fetchImages = async () => {
+                  setLoading(true);
+                  setError(null);
+                  
+                  try {
+                    const response = await fetch('https://localhost:7078/image');
+                    
+                    if (!response.ok) {
+                      throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    setItems(data);
+                  } catch (err) {
+                    console.error('Error fetching images:', err);
+                    setError(err instanceof Error ? err.message : 'Failed to fetch images');
+                    setItems([]);
+                  } finally {
+                    setLoading(false);
+                  }
+                };
+                fetchImages();
+              }}
+              className="px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white cursor-pointer"
+            >
+              Retry
+            </button>
           </div>
         ) : (
           <div className="p-6 w-full h-[90%] overflow-y-auto">
@@ -70,22 +166,22 @@ export default function GalleriModal() {
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                 {items.map((item) => (
                   <div
-                    key={item.id}
+                    key={item.Id}
                     className={
                       "group relative flex flex-col items-center gap-3 border-2 p-4 rounded-lg cursor-pointer transition-all duration-200 " +
-                      (selectedImages.includes(item.id)
+                      (selectedImages.includes(item.Id)
                         ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
                         : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md hover:scale-102")
                     }
                     onClick={() => {
                       setSelectedImages((prev) =>
-                        prev.includes(item.id)
-                          ? prev.filter((id) => id !== item.id)
-                          : [...prev, item.id]
+                        prev.includes(item.Id)
+                          ? prev.filter((id) => id !== item.Id)
+                          : [...prev, item.Id]
                       );
                     }}
                   >
-                    {selectedImages.includes(item.id) && (
+                    {selectedImages.includes(item.Id) && (
                       <div className="absolute -top-2 -right-2 bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold shadow-md">
                         <svg
                           viewBox="0 0 20 20"
@@ -112,13 +208,13 @@ export default function GalleriModal() {
                     )}
                     <div className="w-full aspect-square overflow-hidden rounded-md bg-gray-100">
                       <img
-                        src={item.url}
-                        alt={item.name}
+                        src={`data:${item.ContentType};base64,${item.Data}`}
+                        alt={item.FileName}
                         className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-110"
                       />
                     </div>
                     <span className="text-xs text-gray-600 font-medium text-center truncate w-full">
-                      {item.name}
+                      {item.FileName}
                     </span>
                   </div>
                 ))}
@@ -132,7 +228,7 @@ export default function GalleriModal() {
           <button
             title="Select All"
             onClick={() => {
-              setSelectedImages(items.map((item) => item.id));
+              setSelectedImages(items.map((item) => item.Id));
             }}
             className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-100 text-gray-800 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={loading || selectedImages.length === items.length}
@@ -140,14 +236,12 @@ export default function GalleriModal() {
             Select All
           </button>
           <button
-            title="Accept"
-            onClick={() => {
-              setIsOpen(false);
-            }}
-            className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-100 text-gray-800 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={selectedImages.length === 0 || loading}
+            title="Delete Selected Images"
+            onClick={deleteSelectedImages}
+            className="px-4 py-2 rounded-md bg-red-500 hover:bg-red-600 text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={selectedImages.length === 0 || loading || deleting}
           >
-            Delete
+            {deleting ? 'Deleting...' : `Delete (${selectedImages.length})`}
           </button>
           <button
             title="Close"

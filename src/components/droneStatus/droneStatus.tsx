@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-type DroneStatusType = "Friendly" | "Enemy" | "Unknown" | "No Signal";
+type DroneStatusType = "Friendly" | "Enemy" | "Unknown" | "NoSignal";
 
 const DroneStatus = ({ status }: { status: DroneStatusType }) => {
   const [currentStatus, setCurrentStatus] = useState(status);
