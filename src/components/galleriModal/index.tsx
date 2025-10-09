@@ -26,19 +26,19 @@ export default function GalleriModal() {
     const fetchImages = async () => {
       setLoading(true);
       setError(null);
-      
+
       try {
-        const response = await fetch('https://localhost:7078/image');
-        
+        const response = await fetch("https://localhost:7078/image");
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
         setItems(data);
       } catch (err) {
-        console.error('Error fetching images:', err);
-        setError(err instanceof Error ? err.message : 'Failed to fetch images');
+        console.error("Error fetching images:", err);
+        setError(err instanceof Error ? err.message : "Failed to fetch images");
         setItems([]);
       } finally {
         setLoading(false);
@@ -50,25 +50,30 @@ export default function GalleriModal() {
 
   const deleteSelectedImages = async () => {
     if (selectedImages.length === 0) return;
-    
+
     setDeleting(true);
     const failedDeletes: string[] = [];
-    
+
     try {
       // Delete each selected image
       const deletePromises = selectedImages.map(async (imageId) => {
         try {
-          const response = await fetch(`https://localhost:7078/image/${imageId}`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
+          const response = await fetch(
+            `https://localhost:7078/image/${imageId}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
             }
-          });
-          
+          );
+
           if (!response.ok) {
-            throw new Error(`Failed to delete image ${imageId}: ${response.status}`);
+            throw new Error(
+              `Failed to delete image ${imageId}: ${response.status}`
+            );
           }
-          
+
           return imageId;
         } catch (error) {
           console.error(`Error deleting image ${imageId}:`, error);
@@ -76,32 +81,33 @@ export default function GalleriModal() {
           return null;
         }
       });
-      
+
       const results = await Promise.all(deletePromises);
-      const successfulDeletes = results.filter(id => id !== null) as string[];
-      
+      const successfulDeletes = results.filter((id) => id !== null) as string[];
+
       // Update local state to remove successfully deleted images
-      setItems(prevItems => 
-        prevItems.filter(item => !successfulDeletes.includes(item.Id))
+      setItems((prevItems) =>
+        prevItems.filter((item) => !successfulDeletes.includes(item.Id))
       );
-      
+
       // Clear selection of successfully deleted images
-      setSelectedImages(prevSelected => 
-        prevSelected.filter(id => !successfulDeletes.includes(id))
+      setSelectedImages((prevSelected) =>
+        prevSelected.filter((id) => !successfulDeletes.includes(id))
       );
-      
+
       // Show success/error messages
       if (successfulDeletes.length > 0) {
-        console.log(`Successfully deleted ${successfulDeletes.length} image(s)`);
+        console.log(
+          `Successfully deleted ${successfulDeletes.length} image(s)`
+        );
       }
-      
+
       if (failedDeletes.length > 0) {
         setError(`Failed to delete ${failedDeletes.length} image(s)`);
       }
-      
     } catch (error) {
-      console.error('Error during bulk delete:', error);
-      setError('Failed to delete images');
+      console.error("Error during bulk delete:", error);
+      setError("Failed to delete images");
     } finally {
       setDeleting(false);
     }
@@ -113,7 +119,7 @@ export default function GalleriModal() {
         onClick={() => setIsOpen(true)}
         className='relative flex items-center justify-center font-["Special_Elite"] 
                  text-white rounded-lg cursor-pointer min-w-[6rem] min-h-[3rem] border-2 hover:bg-stone-950/35'
-    >
+      >
         <span className="p-2 pt-3">Gallery</span>
       </button>
       <Modal
@@ -135,19 +141,25 @@ export default function GalleriModal() {
                 const fetchImages = async () => {
                   setLoading(true);
                   setError(null);
-                  
+
                   try {
-                    const response = await fetch('https://localhost:7078/image');
-                    
+                    const response = await fetch(
+                      "https://localhost:7078/image"
+                    );
+
                     if (!response.ok) {
                       throw new Error(`HTTP error! status: ${response.status}`);
                     }
-                    
+
                     const data = await response.json();
                     setItems(data);
                   } catch (err) {
-                    console.error('Error fetching images:', err);
-                    setError(err instanceof Error ? err.message : 'Failed to fetch images');
+                    console.error("Error fetching images:", err);
+                    setError(
+                      err instanceof Error
+                        ? err.message
+                        : "Failed to fetch images"
+                    );
                     setItems([]);
                   } finally {
                     setLoading(false);
@@ -241,7 +253,7 @@ export default function GalleriModal() {
             className="px-4 py-2 rounded-md bg-red-500 hover:bg-red-600 text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={selectedImages.length === 0 || loading || deleting}
           >
-            {deleting ? 'Deleting...' : `Delete (${selectedImages.length})`}
+            {deleting ? "Deleting..." : `Delete (${selectedImages.length})`}
           </button>
           <button
             title="Close"
