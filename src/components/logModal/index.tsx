@@ -116,22 +116,22 @@ export default function LogModal() {
                   </p>
 
                   <p className="flex-1 px-3 font-medium text-gray-800 truncate">
-                    {item.DeviceId}
+                    {item.DeviceId  ?? `No id`}
                   </p>
                   <p className="flex-1 px-3 font-medium text-gray-800 truncate">
-                    {`Device`}
+                    {item.Device?.Name ?? `Device`}
                   </p>
                   <p className="flex-1 px-3 font-medium text-gray-800 truncate">
-                    {item.KnownId}
+                    {item.KnownId  ?? `No id`}
                   </p>
                   <p className="flex-1 px-3 font-medium text-gray-800 truncate">
-                    {`Known`}
+                    {item.Known ? (item.Known.isAllied ? "Friendly" : "Hostile") : "Unknown"}
                   </p>
                   <p className="flex-1 px-3 font-medium text-gray-800 truncate">
-                    {item.CaptureId}
+                    {item.CaptureId ?? `No id`}
                   </p>
                   <p className="flex-1 px-3 font-medium text-gray-800 truncate">
-                    {`Capture`}
+                    {item.Capture?.Name ?? `Capture`}
                   </p>
 
                   {/* <p className="flex flex-row items-center gap-2 min-w-[5.625rem] justify-end">
