@@ -2,11 +2,28 @@ import { useEffect, useState } from "react";
 import { Modal } from "../modal";
 
 export type Log = {
-  id: string;
-  timeStamp: Date;
-  name: string;
-  stance: string;
+  LogId: number;
+  TimeStamp: Date;
+  DeviceId: number;
+  Device?: Device;
+  KnownId: number;
+  Known?: Known;
+  CaptureId?: number;
+  Capture?: Capture;
 };
+
+export type Device = {
+  DeviceId: number;
+  Name: string;
+}
+export type Known = {
+  KnownId: number;
+  isAllied: number;
+}
+export type Capture = {
+  DeviceId: number;
+  Name: string;
+}
 
 export default function LogModal() {
   const [loading, setLoading] = useState(true);
@@ -14,36 +31,46 @@ export default function LogModal() {
 
   const [items, setItems] = useState<Log[]>([]);
 
+
+
+  const fetchLogs = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('https://localhost:7078/log');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data: Log[] = await response.json();
+      
+      // Convert TimeStamp strings to Date objects if needed
+      const processedData = data.map(log => ({
+        ...log,
+        TimeStamp: new Date(log.TimeStamp)
+      }));
+      
+      setItems(processedData);
+    } catch (error) {
+      console.error('Error fetching logs:', error);
+      setItems([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!isOpen) return;
 
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-      setItems([
-        {
-          id: "1",
-          timeStamp: new Date(),
-          name: "Device 1",
-          stance: "Friendly",
-        },
-        {
-          id: "2",
-          timeStamp: new Date(),
-          name: "Device 2",
-          stance: "Hostile",
-        },
-      ]);
-    }, 2000);
+    fetchLogs();
   }, [isOpen]);
 
-  const getStanceClasses = (stance: string) => {
-    const s = stance?.toLowerCase();
-    if (s === "friendly") return "bg-green-500 border-green-600";
-    if (s === "hostile") return "bg-red-500 border-red-600";
-    return "bg-gray-300 border-gray-400";
-  };
+  // const getStanceClasses = (stance: string) => {
+  //   const s = stance?.toLowerCase();
+  //   if (s === "friendly") return "bg-green-500 border-green-600";
+  //   if (s === "hostile") return "bg-red-500 border-red-600";
+  //   return "bg-gray-300 border-gray-400";
+  // };
 
   return (
     <>
@@ -54,7 +81,7 @@ export default function LogModal() {
       >
         <span className="p-2 pt-3">Logs</span>
       </button>
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} styles={{ height: "80%", width: "80%" }}>
         {loading ? (
           <div className="p-2.5 w-full h-[90%] flex items-center justify-center flex-col gap-3">
             <span className="inline-block w-12 h-12 rounded-full border-4 border-gray-300 border-b-transparent animate-spin"></span>
@@ -65,36 +92,60 @@ export default function LogModal() {
             <div className="pb-2 mb-2 border-b text-xs uppercase tracking-wide text-gray-500 w-full flex flex-row justify-between items-center">
               <span className="w-12">ID</span>
               <span className="w-12 text-left">Time</span>
-              <span className="flex-1 px-3">Name</span>
-              <span className="min-w-[5.625rem] text-right">Stance</span>
+              <span className="flex-1 px-3">Device Id</span>
+              <span className="flex-1 px-3">Device</span>
+              <span className="flex-1 px-3">Known Id</span>
+              <span className="flex-1 px-3">Known</span>
+              <span className="flex-1 px-3">Capture Id</span>
+              <span className="flex-1 px-3">Capture</span>
             </div>
             <div className="flex-1 overflow-y-auto divide-y">
               {items.map((item) => (
                 <div
-                  key={item.id}
+                  key={item.LogId}
                   className="py-3 w-full flex flex-row justify-between items-center"
                 >
-                  <p className="text-sm text-gray-600 w-12">{item.id}</p>
+                  <p className="text-sm text-gray-600 w-12">{item.LogId}</p>
+
                   <p className="text-sm text-gray-600 w-12 text-left">
-                    {item.timeStamp.toLocaleTimeString("en-US", {
+                    {item.TimeStamp.toLocaleTimeString("en-US", {
                       hour: "2-digit",
                       minute: "2-digit",
                       hour12: false,
                     })}
                   </p>
+
                   <p className="flex-1 px-3 font-medium text-gray-800 truncate">
-                    {item.name}
+                    {item.DeviceId}
                   </p>
-                  <p className="flex flex-row items-center gap-2 min-w-[5.625rem] justify-end">
-                    <span className="text-sm text-gray-700">{item.stance}</span>
+                  <p className="flex-1 px-3 font-medium text-gray-800 truncate">
+                    {`Device`}
+                  </p>
+                  <p className="flex-1 px-3 font-medium text-gray-800 truncate">
+                    {item.KnownId}
+                  </p>
+                  <p className="flex-1 px-3 font-medium text-gray-800 truncate">
+                    {`Known`}
+                  </p>
+                  <p className="flex-1 px-3 font-medium text-gray-800 truncate">
+                    {item.CaptureId}
+                  </p>
+                  <p className="flex-1 px-3 font-medium text-gray-800 truncate">
+                    {`Capture`}
+                  </p>
+
+                  {/* <p className="flex flex-row items-center gap-2 min-w-[5.625rem] justify-end">
+                    <span className="text-sm text-gray-700">
+                      {item.Known?.isAllied ? "Friendly" : "Hostile"}
+                    </span>
                     <span
                       className={`w-3 h-3 rounded-full border ${getStanceClasses(
-                        item.stance
+                        item.Known?.isAllied ? "Friendly" : "Hostile"
                       )}`}
-                      aria-label={`${item.stance} indicator`}
-                      title={item.stance}
+                      aria-label={`${item.Known?.isAllied ? "Friendly" : "Hostile"} indicator`}
+                      title={item.Known?.isAllied ? "Friendly" : "Hostile"}
                     />
-                  </p>
+                  </p> */}
                 </div>
               ))}
             </div>

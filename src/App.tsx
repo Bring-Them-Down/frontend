@@ -16,7 +16,7 @@ function App() {
         <div className="w-full max-w-6xl">
           <div className="flex items-center gap-4">
             <div className="relative flex-1 flex justify-center">
-              <div className="relative max-w-4xl w-full">
+              <div className="relative max-w-5xl w-full">
                 <VideoPlayer />
               </div>
             </div>
