@@ -1,8 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import Crosshair from "../../assets/Crosshair.svg";
-const VideoPlayer = () => {
+
+export type VideoPlayerProps = {
+  TopLeft?: [number, number];
+  TopRight?: [number, number];
+  BottomRight?: [number, number];
+  BottomLeft?: [number, number];
+};
+
+const VideoPlayer = ({
+  TopLeft,
+  TopRight,
+  BottomRight,
+  BottomLeft,
+}: VideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [videoScale, setVideoScale] = useState({ scaleX: 1, scaleY: 1 });
 
   useEffect(() => {
     let pc: RTCPeerConnection | null = null;
@@ -23,6 +37,10 @@ const VideoPlayer = () => {
             videoRef.current.srcObject = event.streams[0];
             videoRef.current.onloadeddata = () => {
               setIsLoading(false);
+              const video = videoRef.current!;
+              const scaleX = video.clientWidth / video.videoWidth;
+              const scaleY = video.clientHeight / video.videoHeight;
+              setVideoScale({ scaleX, scaleY });
             };
           }
         };
@@ -80,13 +98,58 @@ const VideoPlayer = () => {
         </div>
       )}
       {!isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-99999">
           <img
             src={Crosshair}
             alt="Crosshair"
             className="max-w-[10%] max-h-[10%]"
           />
         </div>
+      )}
+      {TopLeft && TopRight && BottomRight && BottomLeft && !isLoading && (
+        <div
+          className="absolute border-2 border-red-500 pointer-events-none"
+          style={{
+            left: `${
+              Math.min(TopLeft[0], TopRight[0], BottomRight[0], BottomLeft[0]) *
+              videoScale.scaleX
+            }px`,
+            top: `${
+              Math.min(TopLeft[1], TopRight[1], BottomRight[1], BottomLeft[1]) *
+              videoScale.scaleY
+            }px`,
+            width: `${
+              (Math.max(
+                TopLeft[0],
+                TopRight[0],
+                BottomRight[0],
+                BottomLeft[0]
+              ) -
+                Math.min(
+                  TopLeft[0],
+                  TopRight[0],
+                  BottomRight[0],
+                  BottomLeft[0]
+                )) *
+              videoScale.scaleX
+            }px`,
+            height: `${
+              (Math.max(
+                TopLeft[1],
+                TopRight[1],
+                BottomRight[1],
+                BottomLeft[1]
+              ) -
+                Math.min(
+                  TopLeft[1],
+                  TopRight[1],
+                  BottomRight[1],
+                  BottomLeft[1]
+                )) *
+              videoScale.scaleY
+            }px`,
+          }}
+        />
       )}
       <video
         ref={videoRef}

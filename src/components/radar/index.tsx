@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 
-export function Radar() {
-  const [pingAngle, setPingAngle] = useState(0);
+type RadarProps = {
+  pingAngle: number;
+};
+
+export function Radar({ pingAngle }: RadarProps) {
   const [sweepAngle, setSweepAngle] = useState(-90);
   const [sweepDirection, setSweepDirection] = useState(1);
 
   useEffect(() => {
-    const pingInterval = setInterval(() => {
-      setPingAngle(Math.random() * 180 - 90);
-    }, 1000);
-
     const sweepInterval = setInterval(() => {
       setSweepAngle((prev) => {
         const newAngle = prev + 5 * sweepDirection;
@@ -27,7 +26,6 @@ export function Radar() {
     }, 30);
 
     return () => {
-      clearInterval(pingInterval);
       clearInterval(sweepInterval);
     };
   }, [sweepDirection]);

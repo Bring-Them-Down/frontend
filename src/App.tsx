@@ -1,6 +1,8 @@
+import { useEffect, useRef, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import LogModal from "./components/logModal";
 import DroneStatus from "./components/droneStatus/droneStatus";
+import { type DroneStatusType } from "./components/droneStatus/droneStatus";
 import AudioVisualiser from "./components/audioVisualiser";
 import VideoPlayer from "./components/videoPlayer";
 import GalleriModal from "./components/galleriModal";
@@ -8,8 +10,87 @@ import { FollowCursor } from "./components/followCursor";
 import Controls from "./components/controls/controls";
 import { AiThing } from "./components/aiThing";
 import { Radar } from "./components/radar";
+import { type VideoPlayerProps } from "./components/videoPlayer";
 
 function App() {
+  const wsRef = useRef<WebSocket | null>(null);
+  const [videoProps, setVideoProps] = useState<VideoPlayerProps | null>(null);
+  const [pingAngle, setPingAngle] = useState<number>(0);
+  const [enemyStatus, setEnemyStatus] = useState<DroneStatusType>("NoSignal");
+
+  useEffect(() => {
+    const connect = () => {
+      wsRef.current = new WebSocket("ws://192.168.0.120:5005/ws");
+
+      wsRef.current.onopen = () => console.log("WebSocket connected");
+      wsRef.current.onmessage = (event) => {
+        try {
+          console.log(event);
+          const data = JSON.parse(event.data) as {
+            TopLeft?: { X: number; Y: number };
+            TopRight?: { X: number; Y: number };
+            BottomRight?: { X: number; Y: number };
+            BottomLeft?: { X: number; Y: number };
+            Direction?: number;
+            Status?: DroneStatusType;
+            Center?: { X: number; Y: number };
+            Type?: "Uknown" | "Camera" | "Audio";
+            Id?: number;
+          };
+
+          if (!data) return;
+
+          if (
+            data.TopLeft !== undefined &&
+            data.TopRight !== undefined &&
+            data.BottomRight !== undefined &&
+            data.BottomLeft !== undefined
+          ) {
+            setVideoProps({
+              TopRight: [data.TopRight.X, data.TopRight.Y],
+              TopLeft: [data.TopLeft.X, data.TopLeft.Y],
+              BottomRight: [data.BottomRight.X, data.BottomRight.Y],
+              BottomLeft: [data.BottomLeft.X, data.BottomLeft.Y],
+            });
+          }
+
+          if (data.Direction !== undefined) {
+            setPingAngle(data.Direction);
+          }
+
+          if (data.Status !== undefined) {
+            setEnemyStatus(data.Status);
+          }
+        } catch (error) {
+          setEnemyStatus("NoSignal");
+          setPingAngle(0);
+          setVideoProps(null);
+          console.error("Failed to parse WebSocket message", error);
+        }
+      };
+      wsRef.current.onclose = () => {
+        setEnemyStatus("NoSignal");
+        setPingAngle(0);
+        setVideoProps(null);
+        console.log("WebSocket disconnected, attempting to reconnect...");
+        setTimeout(connect, 3000);
+      };
+      wsRef.current.onerror = (err) => {
+        console.error("WebSocket error", err);
+        if (!wsRef.current) {
+          return;
+        }
+        wsRef.current.close();
+      };
+    };
+
+    connect();
+
+    return () => {
+      wsRef.current?.close();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen relative">
       <div className="min-h-screen flex flex-col items-center justify-center p-4 gap-2">
@@ -17,7 +98,7 @@ function App() {
           <div className="flex items-center gap-4">
             <div className="relative flex-1 flex justify-center">
               <div className="relative max-w-5xl w-full">
-                <VideoPlayer />
+                <VideoPlayer {...videoProps} />
               </div>
             </div>
           </div>
@@ -26,7 +107,7 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl h-full">
             <div className="flex items-center justify-center">
               <div className="flex flex-col w-[8rem] items-center justify-center gap-4">
-                <DroneStatus status="NoSignal" />
+                <DroneStatus status={enemyStatus} />
                 <LogModal />
                 <GalleriModal />
               </div>
@@ -40,7 +121,7 @@ function App() {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center gap-2">
-              <Radar />
+              <Radar pingAngle={pingAngle} />
             </div>
           </div>
         </div>
