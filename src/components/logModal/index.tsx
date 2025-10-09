@@ -3,7 +3,7 @@ import { Modal } from "../modal";
 
 export type Log = {
   LogId: number;
-  TimeStamp: Date;
+  Timestamp: Date;
   DeviceId: number;
   Device?: Device;
   KnownId: number;
@@ -44,10 +44,10 @@ export default function LogModal() {
       
       const data: Log[] = await response.json();
       
-      // Convert TimeStamp strings to Date objects if needed
+      // Convert Timestamp strings to Date objects if needed
       const processedData = data.map(log => ({
         ...log,
-        TimeStamp: new Date(log.TimeStamp)
+        Timestamp: new Date(log.Timestamp)
       }));
       
       setItems(processedData);
@@ -108,7 +108,7 @@ export default function LogModal() {
                   <p className="text-sm text-gray-600 w-12">{item.LogId}</p>
 
                   <p className="text-sm text-gray-600 w-12 text-left">
-                    {item.TimeStamp.toLocaleTimeString("en-US", {
+                    {item.Timestamp.toLocaleTimeString("en-US", {
                       hour: "2-digit",
                       minute: "2-digit",
                       hour12: false,
