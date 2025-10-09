@@ -31,7 +31,7 @@ const VideoPlayer = () => {
         await pc.setLocalDescription(offer);
 
         const response = await fetch(
-          "http://192.168.0.238:8889/mystream/whep",
+          "https://192.168.0.238:8889/mystream/whep",
           {
             method: "POST",
             headers: {
