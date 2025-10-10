@@ -14,11 +14,30 @@ import { type VideoPlayerProps } from "./components/videoPlayer";
 
 function App() {
   const wsRef = useRef<WebSocket | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const timeoutRef = useRef<number | null>(null);
   const [videoProps, setVideoProps] = useState<VideoPlayerProps | null>(null);
   const [pingAngle, setPingAngle] = useState<number>(0);
   const [enemyStatus, setEnemyStatus] = useState<DroneStatusType>("NoSignal");
 
+  const resetValues = () => {
+    setEnemyStatus("NoSignal");
+    setPingAngle(0);
+    setVideoProps(null);
+  };
+
+  const resetTimeout = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = window.setTimeout(() => {
+      resetValues();
+    }, 5000);
+  };
+
   useEffect(() => {
+    abortControllerRef.current = new AbortController();
+
     const connect = () => {
       wsRef.current = new WebSocket("ws://192.168.0.120:5005/ws");
 
@@ -39,6 +58,8 @@ function App() {
           };
 
           if (!data) return;
+
+          resetTimeout();
 
           if (
             data.TopLeft !== undefined &&
@@ -62,16 +83,16 @@ function App() {
             setEnemyStatus(data.Status);
           }
         } catch (error) {
-          setEnemyStatus("NoSignal");
-          setPingAngle(0);
-          setVideoProps(null);
+          resetValues();
           console.error("Failed to parse WebSocket message", error);
         }
       };
       wsRef.current.onclose = () => {
-        setEnemyStatus("NoSignal");
-        setPingAngle(0);
-        setVideoProps(null);
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
+        resetValues();
         console.log("WebSocket disconnected, attempting to reconnect...");
         setTimeout(connect, 3000);
       };
@@ -87,6 +108,12 @@ function App() {
     connect();
 
     return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
       wsRef.current?.close();
     };
   }, []);
