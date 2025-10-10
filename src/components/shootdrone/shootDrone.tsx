@@ -1,24 +1,11 @@
-import { toast } from "react-hot-toast";
 import Shoot from "../controls/shoot";
 
-
-
 const ShootDrone: React.FC = () => {
-  const handleShootDrone = () => {
+  const handleShootDrone = async () => {
     try {
-      // Simulate drone shooting logic
-      console.log("Drone shot initiated!");
-
-      toast.success("Drone Shot!", {
-        duration: 3000,
-        style: { background: "#333", color: "#fff" },
-      });
+      await fetch("http://192.168.0.195/fire");
     } catch (error) {
       console.error("Error shooting drone:", error);
-      toast.error("Failed to shoot drone!", {
-        duration: 3000,
-        style: { background: "#333", color: "#fff" },
-      });
     }
   };
 
